@@ -24,9 +24,6 @@ export default function UserSection({ user }) {
           `}
         >
           {user.nickname}
-          {user.nickname}
-          {user.nickname}
-          {user.nickname}
         </span>
       </Box>
       <Box display="flex" alignItems="center">
