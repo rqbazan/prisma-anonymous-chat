@@ -1,7 +1,6 @@
 import next from 'next'
 import { GraphQLServer } from 'graphql-yoga'
-// import Mutation from './mutations'
-import Query from './queries'
+import resolvers from './graphql'
 import router from './routes'
 import { prisma } from '../generated/prisma-client'
 
@@ -10,8 +9,8 @@ const app = next({ dev, dir: 'web' })
 
 app.prepare().then(() => {
   const server = new GraphQLServer({
+    resolvers,
     typeDefs: './server/schema.graphql',
-    resolvers: { Query },
     context: ({ request }) => ({ req: request, prisma })
   })
 
