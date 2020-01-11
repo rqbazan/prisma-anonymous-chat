@@ -10,7 +10,7 @@ const app = next({ dev, dir: 'web' })
 app.prepare().then(() => {
   const server = new GraphQLServer({
     resolvers,
-    typeDefs: './server/graphql/schema.gql',
+    typeDefs: './server/resolvers/schema.graphql',
     context: ({ request }) => ({ req: request, prisma })
   })
 
