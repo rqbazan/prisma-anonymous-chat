@@ -16,7 +16,7 @@ export default function IndexPage() {
         flexDirection="column"
         borderRight="1px solid"
         borderColor="gray.3"
-        width="20%"
+        width={{ xs: '100%', md: '40%', lg: '30%', xl: '20%' }}
         backgroundColor="gray.1"
         zIndex="1"
       >
@@ -48,7 +48,11 @@ export default function IndexPage() {
           )}
         </Box>
       </Box>
-      <Box display="flex" flexDirection="column" width="80%">
+      <Box
+        display={{ xs: 'none', md: 'flex' }}
+        flexDirection="column"
+        width={{ xs: '100%', md: '60%', lg: '70%', xl: '80%' }}
+      >
         {/* <UnselectedChat /> */}
         <ChatHeader
           chat={{
@@ -59,7 +63,8 @@ export default function IndexPage() {
         />
         <ChatThread
           messages={Array.from({ length: 50 }).map((_, i) => ({
-            content: 'hello there my friend',
+            content:
+              'hello there my friend hello there my friend hello there my friend hello there my friend hello there my friend hello there my friend hello there my friend',
             author: {
               nickname: 'sxntixgo'
             },

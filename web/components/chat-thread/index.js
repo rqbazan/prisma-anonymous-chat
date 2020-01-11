@@ -17,7 +17,7 @@ function Message({ content, author, isOneOfMine }) {
       )}
       <Box
         display="inline-flex"
-        maxWidth="40%"
+        maxWidth={{ xs: '60%', lg: '55%', xl: '40%' }}
         px="3"
         py="2"
         borderRadius="xl"
@@ -33,12 +33,8 @@ function Message({ content, author, isOneOfMine }) {
 export default function ChatThread({ messages }) {
   return (
     <Box flex="1" overflow="auto" minHeight="0px">
-      {messages.map(message => (
-        <Message
-          key={message.id}
-          isOneOfMine={Math.random() > 0.5}
-          {...message}
-        />
+      {messages.map((message, i) => (
+        <Message key={message.id} isOneOfMine={i % 2 === 0} {...message} />
       ))}
     </Box>
   )

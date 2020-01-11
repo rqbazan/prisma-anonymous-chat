@@ -8,7 +8,13 @@ export default {
     '8': '8px',
     px: '1px'
   },
-  breakpoints: ['640px', '768px', '1024px', '1280px'],
+  breakpoints: {
+    xs: '0px',
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px'
+  },
   colors: {
     transparent: 'transparent',
     black: '#000',
