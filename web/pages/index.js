@@ -5,6 +5,7 @@ import SearchBar from '~/components/search-bar'
 import ChatPreview from '~/components/chat-preview'
 // import UnselectedChat from '~/components/unselected-chat'
 import ChatHeader from '~/components/chat-header'
+import ChatInput from '~/components/chat-input'
 
 export default function IndexPage() {
   return (
@@ -55,6 +56,8 @@ export default function IndexPage() {
             lastMessage: { content: 'hello there my friend' }
           }}
         />
+        <Box flex="1" overflow="auto" minHeight="0px" />
+        <ChatInput />
       </Box>
     </Box>
   )
