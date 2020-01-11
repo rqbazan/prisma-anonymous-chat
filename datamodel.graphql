@@ -1,4 +1,35 @@
+# { Basic Types
 type User {
   id: ID! @id
+  nickname: String! @unique
+}
+
+type Message {
+  id: ID! @id
+  content: String!
+  createdAt: DateTime! @createdAt
+  author: User!
+}
+
+type Category {
+  id: ID! @id
+  slug: String!
   name: String!
 }
+# } Basic Types
+
+# { Relational Types
+type PrivateChat {
+  id: ID! @id
+  participateA: User! @relation(name: "ParticipateA")
+  participateB: User! @relation(name: "ParticipateB")
+  messages: [Message]
+}
+
+type GroupChat {
+  id: ID! @id
+  category: Category!
+  participates: [User]
+  messages: [Message]
+}
+# } Relational Types

@@ -7,6 +7,22 @@ var models = [
   {
     name: 'User',
     embedded: false
+  },
+  {
+    name: 'Message',
+    embedded: false
+  },
+  {
+    name: 'Category',
+    embedded: false
+  },
+  {
+    name: 'PrivateChat',
+    embedded: false
+  },
+  {
+    name: 'GroupChat',
+    embedded: false
   }
 ]
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
