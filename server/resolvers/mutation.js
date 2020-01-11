@@ -1,7 +1,7 @@
-function updateNickname(_, { nickname }, { req, prisma }) {
+function updateNickname(_, { nickname }, { userId, prisma }) {
   return prisma.updateUser({
     data: { nickname },
-    where: { id: req.headers['non-secret-user-id'] }
+    where: { id: userId }
   })
 }
 

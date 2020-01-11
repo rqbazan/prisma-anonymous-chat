@@ -11,7 +11,11 @@ app.prepare().then(() => {
   const server = new GraphQLServer({
     resolvers,
     typeDefs: './server/resolvers/schema.graphql',
-    context: ({ request }) => ({ req: request, prisma })
+    context: ({ request }) => ({
+      prisma,
+      req: request,
+      userId: request.headers['non-secret-user-id']
+    })
   })
 
   server.express.use(routes(app))

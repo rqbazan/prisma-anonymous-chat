@@ -7,6 +7,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { ApolloLink } from 'apollo-link'
 import fetch from 'isomorphic-unfetch'
+import getNonSecretId from '../utils/get-non-secret-id'
 
 let cachedApolloClient = null
 
@@ -21,10 +22,7 @@ function createApolloClient(initialState = {}) {
     return {
       ...prevContext,
       headers: {
-        'non-secret-id':
-          typeof window === 'undefined'
-            ? undefined
-            : sessionStorage.getItem('non-secret-id')
+        'non-secret-user-id': getNonSecretId()
       }
     }
   })
