@@ -1,11 +1,13 @@
 import { prisma } from '../generated/prisma-client'
 import getUser, { createUser } from './utils/get-user'
 
+// TODO: refactor conditional use of  `req.url`
+
 export default app => {
   const webHandler = app.getRequestHandler()
 
   async function root(req, res, forward) {
-    if (req.url.startsWith('/_next')) {
+    if (req.url.startsWith('/_next') || req.url.startsWith('/api')) {
       return forward()
     }
 

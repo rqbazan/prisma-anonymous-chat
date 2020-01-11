@@ -67,6 +67,7 @@ type Query {
 type Mutation {
   sendPrivateMessage(receiverId: ID!): Message!
   sendGroupMessage(categoryId: ID!): Message!
+  updateNickname(nickname: String!): User!
   hideMessage(messageId: ID!): Message!
 }
 
