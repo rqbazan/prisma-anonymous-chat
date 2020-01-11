@@ -1,4 +1,7 @@
 {
   "name": "ID Challenge",
-  "repository": "https://github.com/rqbazan/id-challenge"
+  "repository": "https://github.com/rqbazan/id-challenge",
+  "env": {
+    "PRISMA_URL": { "required": true }
+  }
 }
