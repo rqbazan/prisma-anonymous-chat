@@ -1,2 +1,2 @@
-release: ./node_modules/.bin/prisma deploy
+release: npx prisma deploy
 web: yarn start
