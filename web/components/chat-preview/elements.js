@@ -27,3 +27,11 @@ export const MessengerNickName = styled.span`
   font-size: 1;
   font-weight: medium;
 `
+
+export const InfoContainer = styled.box`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 2;
+  overflow: hidden;
+`
