@@ -15,15 +15,8 @@ export default function ChatHeader({ chat }) {
       borderBottom="1px solid"
       borderColor="gray.3"
     >
-      <Avatar nickname={displayName} />
-      <Box
-        ml="2"
-        css={`
-          text-transform: uppercase;
-          font-size: 2;
-          align-self: center;
-        `}
-      >
+      <Avatar nickname={displayName} size="small" />
+      <Box ml="2" fontSize="3" alignSelf="center" fontWeight="500">
         {displayName}
       </Box>
     </Box>

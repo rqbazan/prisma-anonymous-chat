@@ -1,4 +1,15 @@
-import styled from '@xstyled/styled-components'
+import styled, { css } from '@xstyled/styled-components'
+
+const sizeVariants = {
+  normal: css`
+    height: 12;
+    width: 12;
+  `,
+  small: css`
+    height: 10;
+    width: 10;
+  `
+}
 
 export const Container = styled.div`
   align-items: center;
@@ -9,4 +20,6 @@ export const Container = styled.div`
   text-transform: uppercase;
   user-select: none;
   width: 12;
+
+  ${({ size }) => sizeVariants[size]};
 `
