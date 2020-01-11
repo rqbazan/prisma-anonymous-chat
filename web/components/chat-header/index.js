@@ -1,12 +1,10 @@
 import React from 'react'
+import Router from 'next/router'
 import { Box } from '@xstyled/styled-components'
 import Avatar from '../avatar'
+import Icon from '../icon'
 
 export default function ChatHeader({ chat }) {
-  const displayName = chat.isPrivate
-    ? chat.messenger.nickname
-    : chat.category.name
-
   return (
     <Box
       display="flex"
@@ -15,9 +13,18 @@ export default function ChatHeader({ chat }) {
       borderBottom="1px solid"
       borderColor="gray.3"
     >
-      <Avatar nickname={displayName} size="small" />
+      <Box
+        role="button"
+        display={{ xs: 'flex', md: 'none' }}
+        alignItems="center"
+        mr="1"
+        onClick={() => Router.back()}
+      >
+        <Icon name="back" />
+      </Box>
+      <Avatar nickname={chat.displayName} size="small" />
       <Box ml="2" fontSize="3" alignSelf="center" fontWeight="500">
-        {displayName}
+        {chat.displayName}
       </Box>
     </Box>
   )

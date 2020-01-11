@@ -1,18 +1,17 @@
 import React from 'react'
+import Link from 'next/link'
 import { Box } from '@xstyled/styled-components'
 import UserSection from '~/components/user-section'
 import SearchBar from '~/components/search-bar'
 import ChatPreview from '~/components/chat-preview'
-// import UnselectedChat from '~/components/unselected-chat'
-import ChatHeader from '~/components/chat-header'
-import ChatInput from '~/components/chat-input'
-import ChatThread from '~/components/chat-thread'
+import UnselectedChat from '~/components/unselected-chat'
+import Chat from '~/widgets/chat'
 
-export default function IndexPage() {
+export default function IndexPage({ chatName }) {
   return (
     <Box display="flex" height="100vh">
       <Box
-        display="flex"
+        display={{ xs: chatName ? 'none' : 'flex', md: 'flex' }}
         flexDirection="column"
         borderRight="1px solid"
         borderColor="gray.3"
@@ -25,54 +24,53 @@ export default function IndexPage() {
           <SearchBar placeholder="Search any user or a #group" />
         </Box>
         <Box flex="1" overflow="auto" minHeight="0px">
-          {Array.from({ length: 50 }).map((v, index) =>
-            index % 2 ? (
-              <ChatPreview
-                isSelected={index === 0}
-                chat={{
-                  isPrivate: true,
-                  messenger: { nickname: 'ricardo' },
-                  lastMessage: { content: 'hello there my friend' }
-                }}
-              />
-            ) : (
-              <ChatPreview
-                isSelected={index === 0}
-                chat={{
-                  isPrivate: false,
-                  category: { name: '#reactjs' },
-                  lastMessage: { content: 'hello there my friend' }
-                }}
-              />
-            )
-          )}
+          {Array.from({ length: 50 }).map((v, index) => (
+            <Link
+              scroll={false}
+              href={`/?chatName=${index % 2 ? 'ricardo' : 'reactjs'}`}
+              as={index % 2 ? '/ricardo' : '/reactjs'}
+            >
+              {index % 2 ? (
+                <ChatPreview
+                  isSelected={chatName === 'ricardo'}
+                  chat={{
+                    isPrivate: true,
+                    displayName: 'ricardo',
+                    messenger: { nickname: 'ricardo' },
+                    lastMessage: { content: 'hello there my friend' }
+                  }}
+                />
+              ) : (
+                <ChatPreview
+                  isSelected={chatName === 'reactjs'}
+                  chat={{
+                    isPrivate: false,
+                    displayName: '#reactjs',
+                    category: { name: 'reactjs' },
+                    lastMessage: { content: 'hello there my friend' }
+                  }}
+                />
+              )}
+            </Link>
+          ))}
         </Box>
       </Box>
       <Box
-        display={{ xs: 'none', md: 'flex' }}
+        display={{
+          xs: chatName ? 'flex' : 'none',
+          md: 'flex'
+        }}
         flexDirection="column"
         width={{ xs: '100%', md: '60%', lg: '70%', xl: '80%' }}
       >
-        {/* <UnselectedChat /> */}
-        <ChatHeader
-          chat={{
-            isPrivate: false,
-            category: { name: '#reactjs' },
-            lastMessage: { content: 'hello there my friend' }
-          }}
-        />
-        <ChatThread
-          messages={Array.from({ length: 50 }).map((_, i) => ({
-            content:
-              'hello there my friend hello there my friend hello there my friend hello there my friend hello there my friend hello there my friend hello there my friend',
-            author: {
-              nickname: 'sxntixgo'
-            },
-            id: `msg-${i}`
-          }))}
-        />
-        <ChatInput />
+        {!chatName ? <UnselectedChat /> : <Chat chatName={chatName} />}
       </Box>
     </Box>
   )
+}
+
+IndexPage.getInitialProps = ctx => {
+  return {
+    chatName: ctx.query.chatName
+  }
 }

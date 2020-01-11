@@ -2,11 +2,13 @@ import React from 'react'
 import Search from './search'
 import Config from './config'
 import Add from './add'
+import Back from './back'
 
 const icons = {
   search: Search,
   config: Config,
-  add: Add
+  add: Add,
+  back: Back
 }
 
 export default function Icon({ name, size = 32, ...props }) {

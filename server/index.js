@@ -23,6 +23,10 @@ const webHandler = app.getRequestHandler()
 app.prepare().then(() => {
   const server = new GraphQLServer({ typeDefs, mocks, resolvers: () => true })
 
+  server.express.get('/:chatName', (req, res) => {
+    app.render(req, res, '/', { chatName: req.params.chatName })
+  })
+
   server.express.get('*', (req, res, forward) => {
     if (req.url.startsWith('/api')) {
       forward()
