@@ -6,6 +6,7 @@ import ChatPreview from '~/components/chat-preview'
 // import UnselectedChat from '~/components/unselected-chat'
 import ChatHeader from '~/components/chat-header'
 import ChatInput from '~/components/chat-input'
+import ChatThread from '~/components/chat-thread'
 
 export default function IndexPage() {
   return (
@@ -56,7 +57,15 @@ export default function IndexPage() {
             lastMessage: { content: 'hello there my friend' }
           }}
         />
-        <Box flex="1" overflow="auto" minHeight="0px" />
+        <ChatThread
+          messages={Array.from({ length: 50 }).map((_, i) => ({
+            content: 'hello there my friend',
+            author: {
+              nickname: 'sxntixgo'
+            },
+            id: `msg-${i}`
+          }))}
+        />
         <ChatInput />
       </Box>
     </Box>

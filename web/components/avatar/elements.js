@@ -8,6 +8,11 @@ const sizeVariants = {
   small: css`
     height: 10;
     width: 10;
+  `,
+  tiny: css`
+    height: 8;
+    width: 8;
+    font-size: 0;
   `
 }
 

@@ -14,7 +14,12 @@ function getHashCode(string) {
   return hash
 }
 
-export default function Avatar({ nickname, size = 'normal' }) {
+export default function Avatar({
+  style,
+  className,
+  nickname,
+  size = 'normal'
+}) {
   const shortened = getHashCode(nickname) % 360
 
   const bgColor = `hsl(${shortened},50%,90%)`
@@ -22,8 +27,10 @@ export default function Avatar({ nickname, size = 'normal' }) {
 
   return (
     <Container
+      className={className}
       size={size}
       style={{
+        ...style,
         backgroundColor: bgColor,
         color: textColor
       }}
