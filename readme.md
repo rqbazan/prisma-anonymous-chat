@@ -18,4 +18,5 @@ in order to get the **Web Developer - FrontEnd** position of the company.
 
 ### Backend Stack
 
-- [Express](https://expressjs.com/)
+- [Prisma](https://www.prisma.io/)
+- [graphql-yoga](https://github.com/prisma-labs/graphql-yoga)
