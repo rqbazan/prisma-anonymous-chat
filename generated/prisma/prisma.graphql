@@ -169,6 +169,7 @@ type GroupChat {
   category: Category!
   participates(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+  createdAt: DateTime!
 }
 
 type GroupChatConnection {
@@ -192,10 +193,13 @@ type GroupChatEdge {
 enum GroupChatOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type GroupChatPreviousValues {
   id: ID!
+  createdAt: DateTime!
 }
 
 type GroupChatSubscriptionPayload {
@@ -244,6 +248,14 @@ input GroupChatWhereInput {
   messages_every: MessageWhereInput
   messages_some: MessageWhereInput
   messages_none: MessageWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [GroupChatWhereInput!]
   OR: [GroupChatWhereInput!]
   NOT: [GroupChatWhereInput!]
@@ -505,6 +517,7 @@ type PrivateChat {
   participateA: User!
   participateB: User!
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+  createdAt: DateTime!
 }
 
 type PrivateChatConnection {
@@ -528,10 +541,13 @@ type PrivateChatEdge {
 enum PrivateChatOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type PrivateChatPreviousValues {
   id: ID!
+  createdAt: DateTime!
 }
 
 type PrivateChatSubscriptionPayload {
@@ -578,6 +594,14 @@ input PrivateChatWhereInput {
   messages_every: MessageWhereInput
   messages_some: MessageWhereInput
   messages_none: MessageWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [PrivateChatWhereInput!]
   OR: [PrivateChatWhereInput!]
   NOT: [PrivateChatWhereInput!]

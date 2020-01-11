@@ -1,13 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { Box } from '@xstyled/styled-components'
+import withApollo from '~/hocs/with-apollo'
 import UserSection from '~/components/user-section'
 import SearchBar from '~/components/search-bar'
 import ChatPreview from '~/components/chat-preview'
 import UnselectedChat from '~/components/unselected-chat'
 import Chat from '~/widgets/chat'
+import whoamiQuery from '~/graphql/whoami'
 
-export default function IndexPage({ chatName }) {
+function IndexPage({ chatName, me }) {
   return (
     <Box display="flex" height="100vh">
       <Box
@@ -19,7 +21,7 @@ export default function IndexPage({ chatName }) {
         backgroundColor="gray.1"
         zIndex="1"
       >
-        <UserSection user={{ nickname: 'sxntixgo' }} />
+        <UserSection user={me} />
         <Box p="3" pt="1">
           <SearchBar placeholder="Search any user or a #group" />
         </Box>
@@ -27,8 +29,14 @@ export default function IndexPage({ chatName }) {
           {Array.from({ length: 50 }).map((v, index) => (
             <Link
               scroll={false}
-              href={`/?chatName=${index % 2 ? 'ricardo' : 'reactjs'}`}
-              as={index % 2 ? '/ricardo' : '/reactjs'}
+              href={{
+                pathname: '/',
+                query: {
+                  chatName: index % 2 ? 'ricardo' : 'reactjs',
+                  userId: me.id
+                }
+              }}
+              as={index % 2 ? `/${me.id}/ricardo` : `/${me.id}/reactjs`}
             >
               {index % 2 ? (
                 <ChatPreview
@@ -69,8 +77,16 @@ export default function IndexPage({ chatName }) {
   )
 }
 
-IndexPage.getInitialProps = ctx => {
+IndexPage.getInitialProps = async ctx => {
+  const response = await ctx.apolloClient.query({
+    query: whoamiQuery,
+    variables: { userId: ctx.query.userId }
+  })
+
   return {
-    chatName: ctx.query.chatName
+    chatName: ctx.query.chatName,
+    me: response.data.whoami
   }
 }
+
+export default withApollo(IndexPage)

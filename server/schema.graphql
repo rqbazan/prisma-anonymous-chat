@@ -1,0 +1,75 @@
+enum ChatEnum {
+  PRIVATE
+  GROUP
+}
+
+enum SearchableEnum {
+  USER
+  CATEGORY
+}
+
+interface Chat {
+  id: ID!
+  lastMessage: Message!
+  type: ChatEnum!
+}
+
+interface Searchable {
+  id: ID!
+  displayName: String!
+  type: SearchableEnum!
+}
+
+type User implements Searchable {
+  id: ID!
+  displayName: String!
+  type: SearchableEnum!
+  nickname: String!
+}
+
+type Category implements Searchable {
+  id: ID!
+  displayName: String!
+  type: SearchableEnum!
+  slug: String!
+  name: String!
+}
+
+type Message {
+  id: ID!
+  content: String!
+  author: User!
+}
+
+type PrivateChat implements Chat {
+  id: ID!
+  lastMessage: Message!
+  type: ChatEnum!
+  messages: [Message]
+  messenger: User
+}
+
+type GroupChat implements Chat {
+  id: ID!
+  lastMessage: Message!
+  type: ChatEnum!
+  messages: [Message]
+  participates: [User]
+}
+
+type Query {
+  whoami(userId: ID!): User!
+  search(displayNameLike: String!): [Searchable]
+  chats: [Chat]
+  getChat(chatId: ID!): Chat
+}
+
+type Mutation {
+  sendPrivateMessage(receiverId: ID!): Message!
+  sendGroupMessage(categoryId: ID!): Message!
+  hideMessage(messageId: ID!): Message!
+}
+
+type Subscription {
+  chat(chatId: ID!): Chat
+}

@@ -192,6 +192,7 @@ module.exports = {
           first: Int
           last: Int
         ): [Message!]
+        createdAt: DateTime!
       }
 
       type GroupChatConnection {
@@ -215,10 +216,13 @@ module.exports = {
       enum GroupChatOrderByInput {
         id_ASC
         id_DESC
+        createdAt_ASC
+        createdAt_DESC
       }
 
       type GroupChatPreviousValues {
         id: ID!
+        createdAt: DateTime!
       }
 
       type GroupChatSubscriptionPayload {
@@ -267,6 +271,14 @@ module.exports = {
         messages_every: MessageWhereInput
         messages_some: MessageWhereInput
         messages_none: MessageWhereInput
+        createdAt: DateTime
+        createdAt_not: DateTime
+        createdAt_in: [DateTime!]
+        createdAt_not_in: [DateTime!]
+        createdAt_lt: DateTime
+        createdAt_lte: DateTime
+        createdAt_gt: DateTime
+        createdAt_gte: DateTime
         AND: [GroupChatWhereInput!]
         OR: [GroupChatWhereInput!]
         NOT: [GroupChatWhereInput!]
@@ -577,6 +589,7 @@ module.exports = {
           first: Int
           last: Int
         ): [Message!]
+        createdAt: DateTime!
       }
 
       type PrivateChatConnection {
@@ -600,10 +613,13 @@ module.exports = {
       enum PrivateChatOrderByInput {
         id_ASC
         id_DESC
+        createdAt_ASC
+        createdAt_DESC
       }
 
       type PrivateChatPreviousValues {
         id: ID!
+        createdAt: DateTime!
       }
 
       type PrivateChatSubscriptionPayload {
@@ -650,6 +666,14 @@ module.exports = {
         messages_every: MessageWhereInput
         messages_some: MessageWhereInput
         messages_none: MessageWhereInput
+        createdAt: DateTime
+        createdAt_not: DateTime
+        createdAt_in: [DateTime!]
+        createdAt_not_in: [DateTime!]
+        createdAt_lt: DateTime
+        createdAt_lte: DateTime
+        createdAt_gt: DateTime
+        createdAt_gte: DateTime
         AND: [PrivateChatWhereInput!]
         OR: [PrivateChatWhereInput!]
         NOT: [PrivateChatWhereInput!]

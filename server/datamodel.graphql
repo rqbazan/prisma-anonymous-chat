@@ -24,6 +24,7 @@ type PrivateChat {
   participateA: User! @relation(name: "ParticipateA")
   participateB: User! @relation(name: "ParticipateB")
   messages: [Message]
+  createdAt: DateTime! @createdAt
 }
 
 type GroupChat {
@@ -31,5 +32,6 @@ type GroupChat {
   category: Category!
   participates: [User]
   messages: [Message]
+  createdAt: DateTime! @createdAt
 }
 # } Relational Types

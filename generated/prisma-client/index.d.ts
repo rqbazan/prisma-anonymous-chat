@@ -275,9 +275,17 @@ export type MessageOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
-export type GroupChatOrderByInput = "id_ASC" | "id_DESC";
+export type GroupChatOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
-export type PrivateChatOrderByInput = "id_ASC" | "id_DESC";
+export type PrivateChatOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -436,6 +444,14 @@ export interface GroupChatWhereInput {
   messages_every?: Maybe<MessageWhereInput>;
   messages_some?: Maybe<MessageWhereInput>;
   messages_none?: Maybe<MessageWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<GroupChatWhereInput[] | GroupChatWhereInput>;
   OR?: Maybe<GroupChatWhereInput[] | GroupChatWhereInput>;
   NOT?: Maybe<GroupChatWhereInput[] | GroupChatWhereInput>;
@@ -469,6 +485,14 @@ export interface PrivateChatWhereInput {
   messages_every?: Maybe<MessageWhereInput>;
   messages_some?: Maybe<MessageWhereInput>;
   messages_none?: Maybe<MessageWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<PrivateChatWhereInput[] | PrivateChatWhereInput>;
   OR?: Maybe<PrivateChatWhereInput[] | PrivateChatWhereInput>;
   NOT?: Maybe<PrivateChatWhereInput[] | PrivateChatWhereInput>;
@@ -948,6 +972,7 @@ export interface AggregateCategorySubscription
 
 export interface GroupChat {
   id: ID_Output;
+  createdAt: DateTimeOutput;
 }
 
 export interface GroupChatPromise extends Promise<GroupChat>, Fragmentable {
@@ -971,6 +996,7 @@ export interface GroupChatPromise extends Promise<GroupChat>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface GroupChatSubscription
@@ -996,6 +1022,7 @@ export interface GroupChatSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface GroupChatNullablePromise
@@ -1021,6 +1048,7 @@ export interface GroupChatNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface User {
@@ -1190,6 +1218,7 @@ export interface AggregateMessageSubscription
 
 export interface PrivateChat {
   id: ID_Output;
+  createdAt: DateTimeOutput;
 }
 
 export interface PrivateChatPromise extends Promise<PrivateChat>, Fragmentable {
@@ -1205,6 +1234,7 @@ export interface PrivateChatPromise extends Promise<PrivateChat>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface PrivateChatSubscription
@@ -1222,6 +1252,7 @@ export interface PrivateChatSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface PrivateChatNullablePromise
@@ -1239,6 +1270,7 @@ export interface PrivateChatNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface PrivateChatConnection {
@@ -1441,18 +1473,21 @@ export interface GroupChatSubscriptionPayloadSubscription
 
 export interface GroupChatPreviousValues {
   id: ID_Output;
+  createdAt: DateTimeOutput;
 }
 
 export interface GroupChatPreviousValuesPromise
   extends Promise<GroupChatPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface GroupChatPreviousValuesSubscription
   extends Promise<AsyncIterator<GroupChatPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface MessageSubscriptionPayload {
@@ -1529,18 +1564,21 @@ export interface PrivateChatSubscriptionPayloadSubscription
 
 export interface PrivateChatPreviousValues {
   id: ID_Output;
+  createdAt: DateTimeOutput;
 }
 
 export interface PrivateChatPreviousValuesPromise
   extends Promise<PrivateChatPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface PrivateChatPreviousValuesSubscription
   extends Promise<AsyncIterator<PrivateChatPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserSubscriptionPayload {
