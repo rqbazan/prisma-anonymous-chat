@@ -23,6 +23,7 @@ export default function IndexPage() {
           {Array.from({ length: 50 }).map((v, index) =>
             index % 2 ? (
               <ChatPreview
+                isSelected={index === 0}
                 chat={{
                   isPrivate: true,
                   messenger: { nickname: 'ricardo' },
@@ -31,6 +32,7 @@ export default function IndexPage() {
               />
             ) : (
               <ChatPreview
+                isSelected={index === 0}
                 chat={{
                   isPrivate: false,
                   category: { name: '#reactjs' },
@@ -41,7 +43,18 @@ export default function IndexPage() {
           )}
         </Box>
       </Box>
-      <Box display="flex" width="80%" />
+      <Box display="flex" width="80%">
+        <Box m="auto" height="1/2">
+          <img
+            src="https://res.cloudinary.com/dpwoyjb1f/image/upload/v1578743281/id-challenge/undraw_ideas_s70l_cqs02q.svg"
+            alt="no selected chat"
+            css={`
+              height: 100%;
+              max-width: 100%;
+            `}
+          />
+        </Box>
+      </Box>
     </Box>
   )
 }

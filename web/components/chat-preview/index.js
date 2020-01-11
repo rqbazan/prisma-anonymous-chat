@@ -7,9 +7,9 @@ import {
 } from './elements'
 import Avatar from '../avatar'
 
-function PrivateChatPreview({ chat, ...props }) {
+function PrivateChatPreview({ chat, isSelected, ...props }) {
   return (
-    <Container {...props}>
+    <Container {...props} isSelected={isSelected}>
       <Avatar nickname={chat.messenger.nickname} />
       <InfoContainer>
         <MessengerNickName>{chat.messenger.nickname}</MessengerNickName>
@@ -19,9 +19,9 @@ function PrivateChatPreview({ chat, ...props }) {
   )
 }
 
-function GroupChatPreview({ chat, ...props }) {
+function GroupChatPreview({ chat, isSelected, ...props }) {
   return (
-    <Container {...props}>
+    <Container {...props} isSelected={isSelected}>
       <Avatar nickname={chat.category.name} />
       <InfoContainer>
         <MessengerNickName>{chat.category.name}</MessengerNickName>

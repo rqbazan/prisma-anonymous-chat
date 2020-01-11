@@ -1,8 +1,14 @@
-import styled from '@xstyled/styled-components'
+import styled, { css } from '@xstyled/styled-components'
+
+const hoveredStyle = css`
+  background-color: gray.2;
+`
 
 export const Container = styled.box.attrs({ role: 'button' })`
   display: flex;
   padding: 2;
+
+  ${props => props.isSelected && hoveredStyle}
 
   &:not(:last-child) {
     border-bottom: 1px solid;
@@ -10,7 +16,7 @@ export const Container = styled.box.attrs({ role: 'button' })`
   }
 
   &:hover {
-    background-color: gray.2;
+    ${hoveredStyle}
   }
 `
 
