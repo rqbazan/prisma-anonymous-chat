@@ -3,6 +3,8 @@ import { Box } from '@xstyled/styled-components'
 import UserSection from '~/components/user-section'
 import SearchBar from '~/components/search-bar'
 import ChatPreview from '~/components/chat-preview'
+// import UnselectedChat from '~/components/unselected-chat'
+import ChatHeader from '~/components/chat-header'
 
 export default function IndexPage() {
   return (
@@ -14,6 +16,7 @@ export default function IndexPage() {
         borderColor="gray.3"
         width="20%"
         backgroundColor="gray.1"
+        zIndex="1"
       >
         <UserSection user={{ nickname: 'sxntixgo' }} />
         <Box p="3" pt="1">
@@ -43,17 +46,15 @@ export default function IndexPage() {
           )}
         </Box>
       </Box>
-      <Box display="flex" width="80%">
-        <Box m="auto" height="1/2">
-          <img
-            src="https://res.cloudinary.com/dpwoyjb1f/image/upload/v1578743281/id-challenge/undraw_ideas_s70l_cqs02q.svg"
-            alt="no selected chat"
-            css={`
-              height: 100%;
-              max-width: 100%;
-            `}
-          />
-        </Box>
+      <Box display="flex" flexDirection="column" width="80%">
+        {/* <UnselectedChat /> */}
+        <ChatHeader
+          chat={{
+            isPrivate: false,
+            category: { name: '#reactjs' },
+            lastMessage: { content: 'hello there my friend' }
+          }}
+        />
       </Box>
     </Box>
   )
