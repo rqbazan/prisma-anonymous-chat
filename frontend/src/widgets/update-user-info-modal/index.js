@@ -2,6 +2,7 @@ import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from '@xstyled/styled-components'
 import { useForm } from 'react-hook-form'
+import notifier from 'zeit-toast-clone'
 import updateUserMutation from '~/graphql/update-user'
 import FieldInput from '~/components/field-input'
 import Button from '~/components/button'
@@ -17,6 +18,7 @@ export default function UpdateUserInfoModal({ user, controller }) {
     try {
       await updateUser({ variables: values })
       controller.close()
+      notifier.success('Update successful 🎉')
     } catch (error) {
       // eslint-disable-next-line
       error.graphQLErrors?.map(({ message }) => {
