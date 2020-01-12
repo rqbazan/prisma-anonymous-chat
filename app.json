@@ -1,0 +1,9 @@
+{
+  "name": "ID Challenge",
+  "repository": "https://github.com/rqbazan/id-challenge",
+  "env": {
+    "PRISMA_URL": { "required": true },
+    "PRISMA_MANAGEMENT_API_SECRET": { "required": true },
+    "API": { "required": true }
+  }
+}
