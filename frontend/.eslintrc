@@ -1,9 +1,13 @@
 {
+  "root": true,
   "extends": "rqbazan-js/react",
-  "ignorePatterns": ["generated"],
   "settings": {
     "import/resolver": {
       "babel-module": {}
     }
+  },
+  "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off"
   }
 }

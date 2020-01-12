@@ -1,5 +1,0 @@
-endpoint: ${env:PRISMA_URL}
-datamodel: ./server/datamodel.gql
-generate:
-  - generator: javascript-client
-    output: ./generated/prisma-client/

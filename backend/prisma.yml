@@ -1,0 +1,5 @@
+endpoint: ${env:PRISMA_URL}
+datamodel: ./src/datamodel.gql
+generate:
+  - generator: typescript-client
+    output: ./src/generated/prisma-client/
