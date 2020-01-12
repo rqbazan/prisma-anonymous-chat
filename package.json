@@ -13,7 +13,7 @@
     "tsc:watch": "tsc -p backend -w",
     "nodemon": "nodemon",
     "dev": "run-p tsc:watch nodemon",
-    "heroku-prebuild": "source ./scripts/heroku-prebuild.sh",
+    "heroku-prebuild": ". ./scripts/heroku-prebuild.sh",
     "build": "run-p build:*",
     "build:frontend": "next build frontend",
     "build:backend": "tsc -p backend && ef-tspm -c backend/tsconfig.json -r backend",
