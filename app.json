@@ -1,6 +1,9 @@
 {
   "name": "ID Challenge",
   "repository": "https://github.com/rqbazan/id-challenge",
+  "scripts": {
+    "postdeploy": "source ./scripts/postdeploy.sh"
+  },
   "env": {
     "PRISMA_URL": { "required": true },
     "PRISMA_MANAGEMENT_API_SECRET": { "required": true },
