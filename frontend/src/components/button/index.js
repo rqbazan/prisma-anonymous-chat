@@ -1,18 +1,26 @@
-import styled from '@xstyled/styled-components'
+import React from 'react'
+import Loader from '~/components/loader'
+import { ButtonAtom } from './elements'
 
-export default styled.button`
-  background-color: gray.7;
-  color: light;
-  font-size: 1;
-  font-weight: medium;
-  padding: 2 3;
-  border-radius: default;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    background-color: gray.6;
-  }
-`
+export default function Button({ loading, children, ...props }) {
+  return (
+    <ButtonAtom {...props}>
+      {!loading ? (
+        children
+      ) : (
+        <>
+          <span style={{ opacity: 0 }}>{children}</span>
+          <span
+            css={`
+              position: absolute;
+              display: flex;
+              align-items: center;
+            `}
+          >
+            <Loader />
+          </span>
+        </>
+      )}
+    </ButtonAtom>
+  )
+}

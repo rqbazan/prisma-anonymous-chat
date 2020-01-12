@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Box } from '@xstyled/styled-components'
 import withApollo from '~/hocs/with-apollo'
+import withModal from '~/hocs/with-modal'
 import SearchBar from '~/components/search-bar'
 import ChatPreview from '~/components/chat-preview'
 import UnselectedChat from '~/components/unselected-chat'
@@ -89,4 +90,4 @@ IndexPage.getInitialProps = async ctx => {
   }
 }
 
-export default withApollo(IndexPage)
+export default withApollo(withModal(IndexPage))

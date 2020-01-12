@@ -53,7 +53,10 @@ export function ModalCanvas() {
               >
                 <CloseIcon />
               </Box>
-              {React.createElement(modal.component, modal.props)}
+              {React.createElement(modal.component, {
+                controller,
+                ...modal.props
+              })}
             </Box>
           </ModalContainer>
         </CanvasContainer>,

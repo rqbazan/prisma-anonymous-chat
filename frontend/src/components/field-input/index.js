@@ -9,6 +9,7 @@ export default function FieldInput({
   error,
   className,
   style,
+  inputRef,
   ...props
 }) {
   return (
@@ -20,7 +21,7 @@ export default function FieldInput({
     >
       <label htmlFor={name}>
         {label}
-        <Input {...props} />
+        <Input ref={inputRef} name={name} {...props} />
       </label>
       {error && (
         <Box mt="1">
