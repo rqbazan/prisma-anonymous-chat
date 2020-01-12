@@ -1,0 +1,26 @@
+{
+  "name": "id-challenge-api",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Ricardo Alexis Quiroz Bazan <raquirozbazan@gmail.com>",
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "nodemonConfig": {
+    "exec": "node -r esm -r dotenv/config src"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.18.3",
+    "nanoid": "^2.1.9",
+    "prisma-client-lib": "^1.34.10"
+  },
+  "devDependencies": {
+    "eslint-config-rqbazan-ts": "^0.3.1",
+    "esm": "^3.2.25",
+    "nodemon": "^2.0.2",
+    "prisma": "^1.34.10"
+  }
+}
