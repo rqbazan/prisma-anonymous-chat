@@ -1,9 +1,13 @@
 import React from 'react'
 import { Box } from '@xstyled/styled-components'
-import Avatar from '../avatar'
-import Icon from '../icon'
+import { useModal } from '~/lib/modal'
+import Avatar from '~/components/avatar'
+import Icon from '~/components/icon'
+import UpdateUserInfoModal from '../update-user-info-modal'
 
 export default function UserSection({ user }) {
+  const { controller } = useModal()
+
   return (
     <Box display="flex" width="100%" height="auto" p="3">
       <Avatar nickname={user.nickname} />
@@ -27,7 +31,11 @@ export default function UserSection({ user }) {
         </span>
       </Box>
       <Box display="flex" alignItems="center">
-        <Box role="button" mr="2">
+        <Box
+          role="button"
+          mr="2"
+          onClick={() => controller.open(UpdateUserInfoModal, { user })}
+        >
           <Icon name="config" />
         </Box>
         <div role="button">
