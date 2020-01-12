@@ -7,10 +7,10 @@ export default function FieldError({ children }) {
       display="flex"
       borderRadius="default"
       backgroundColor="red.4"
-      px="3"
-      py="3"
-      alignItem="center"
-      fontSize=""
+      px="2"
+      py="2"
+      alignItems="center"
+      fontSize="0"
     >
       {children}
     </Box>

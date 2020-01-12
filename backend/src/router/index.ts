@@ -7,6 +7,12 @@ export default (nextServer: ReturnType<typeof createNextServer>) => {
   const webHandler = nextServer.getRequestHandler()
   const appRouter = express.Router()
 
+  if (process.env.NODE_ENV !== 'production') {
+    appRouter.get('/test', async (req, res) => {
+      nextServer.render(req, res, '/test')
+    })
+  }
+
   appRouter.get('/', async (_, res) => {
     const newUser = await createUser(prisma)
     res.redirect(`/${newUser.id}`)

@@ -24,7 +24,10 @@
     "validate": "run-p check-format lint build"
   },
   "nodemonConfig": {
-    "exec": "node -r ./backend/bootstrap.js ./backend/dist/src"
+    "exec": "node -r ./backend/bootstrap.js ./backend/dist/src",
+    "ignore": [
+      "frontend/*"
+    ]
   },
   "husky": {
     "hooks": {
