@@ -9,7 +9,7 @@ import Button from '~/components/button'
 export default function UpdateUserInfoModal({ user, controller }) {
   const [updateUser] = useMutation(updateUserMutation)
 
-  const { handleSubmit, register, errors, formState } = useForm({
+  const { handleSubmit, register, errors, setError, formState } = useForm({
     defaultValues: user
   })
 
@@ -18,7 +18,12 @@ export default function UpdateUserInfoModal({ user, controller }) {
       await updateUser({ variables: values })
       controller.close()
     } catch (error) {
-      console.error(error)
+      // eslint-disable-next-line
+      error.graphQLErrors?.map(({ message }) => {
+        if (message.includes('unique constraint')) {
+          setError('nickname', 'unique', 'The nickname is already taken')
+        }
+      })
     }
   }
 
