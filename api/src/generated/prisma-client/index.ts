@@ -1689,4 +1689,9 @@ export const models: Model[] = [
  * Type Defs
  */
 
-export const prisma: Prisma;
+export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
+  typeDefs,
+  models,
+  endpoint: `${process.env["PRISMA_URL"]}`
+});
+export const prisma = new Prisma();

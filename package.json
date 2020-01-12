@@ -10,6 +10,9 @@
     "web"
   ],
   "scripts": {
+    "dev:web": "yarn workspace id-challenge-web run dev",
+    "dev:api": "yarn workspace id-challenge-api run dev",
+    "dev": "run-p dev:*",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json)\" \"!generated/**\"",
     "format": "yarn prettier --write",

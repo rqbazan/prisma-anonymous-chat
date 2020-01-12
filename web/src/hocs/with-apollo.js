@@ -14,7 +14,7 @@ let cachedApolloClient = null
 function createApolloClient(initialState = {}) {
   const httpLink = createHttpLink({
     fetch,
-    uri: `${process.env.API}/graphql`,
+    uri: `${process.env.API_URL}/graphql`,
     credentials: 'same-origin'
   })
 
