@@ -1,5 +1,12 @@
 {
   "root": true,
   "ignorePatterns": ["generated"],
-  "extends": "rqbazan-js"
+  "extends": "rqbazan-ts",
+  "settings": {
+    "import/ignore": "off"
+  },
+  "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off"
+  }
 }
