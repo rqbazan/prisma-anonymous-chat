@@ -4,6 +4,6 @@
   "env": {
     "PRISMA_URL": { "required": true },
     "PRISMA_MANAGEMENT_API_SECRET": { "required": true },
-    "API_URL": { "required": true }
+    "API_URL": { "required": false }
   }
 }
