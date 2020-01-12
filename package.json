@@ -6,14 +6,14 @@
   },
   "license": "MIT",
   "workspaces": [
-    "api",
-    "web"
+    "backend",
+    "frontend"
   ],
   "scripts": {
-    "dev:web": "yarn workspace web run dev",
-    "dev:api": "yarn workspace api run dev",
-    "build:web": "yarn workspace web run build",
-    "build:api": "yarn workspace api run build",
+    "dev:frontend": "yarn workspace frontend run dev",
+    "dev:backend": "yarn workspace backend run dev",
+    "build:frontend": "yarn workspace frontend run build",
+    "build:backend": "yarn workspace backend run build",
     "dev": "run-p dev:*",
     "build": "run-p build:*",
     "lint": "eslint --ignore-path .gitignore .",

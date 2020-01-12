@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "backend",
   "private": true,
   "version": "1.0.0",
   "license": "MIT",
@@ -12,7 +12,9 @@
     "nodemon": "nodemon",
     "dev": "run-p tsc:watch nodemon",
     "start": "NODE_ENV=production node dist",
-    "build": "tsc --noEmit && ef-tspm"
+    "build:tsc": "tsc --noEmit",
+    "build:tspm": "ef-tspm",
+    "build": "run-s build:*"
   },
   "nodemonConfig": {
     "exec": "node -r ./bootstrap.js dist"
