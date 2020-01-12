@@ -1,5 +1,6 @@
 {
-  "name": "id-challenge-web",
+  "name": "web",
+  "private": true,
   "version": "1.0.0",
   "license": "MIT",
   "author": "Ricardo Alexis Quiroz Bazan <raquirozbazan@gmail.com>",

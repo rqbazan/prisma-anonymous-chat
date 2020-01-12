@@ -10,14 +10,17 @@
     "web"
   ],
   "scripts": {
-    "dev:web": "yarn workspace id-challenge-web run dev",
-    "dev:api": "yarn workspace id-challenge-api run dev",
+    "dev:web": "yarn workspace web run dev",
+    "dev:api": "yarn workspace api run dev",
+    "build:web": "yarn workspace web run build",
+    "build:api": "yarn workspace api run build",
     "dev": "run-p dev:*",
+    "build": "run-p build:*",
     "lint": "eslint --ignore-path .gitignore .",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json)\" \"!generated/**\"",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|js|json)\" \"!**/generated/**\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
-    "validate": "npm-run-all --parallel check-format lint build"
+    "validate": "run-p check-format lint build"
   },
   "husky": {
     "hooks": {
@@ -26,11 +29,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,json}": [
+    "*.{ts,js,json}": [
       "prettier --ignore-path .gitignore --write",
       "git add"
     ],
-    "*.js": [
+    "*.{ts,js}": [
       "eslint --ignore-path .gitignore --fix",
       "git add"
     ]
