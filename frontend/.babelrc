@@ -8,7 +8,7 @@
       {
         "root": ["."],
         "alias": {
-          "~": "./src"
+          "~": "./frontend/src"
         }
       }
     ]

@@ -10,17 +10,20 @@
     "frontend"
   ],
   "scripts": {
-    "dev:frontend": "yarn workspace frontend run dev",
-    "dev:backend": "yarn workspace backend run dev",
-    "build:frontend": "yarn workspace frontend run build",
-    "build:backend": "yarn workspace backend run build",
-    "dev": "run-p dev:*",
+    "tsc:watch": "tsc -p backend -w",
+    "nodemon": "nodemon",
+    "dev": "run-p tsc:watch nodemon",
     "build": "run-p build:*",
+    "build:frontend": "next build frontend",
+    "build:backend": "tsc -p backend && ef-tspm -c backend/tsconfig.json -r backend",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|js|json)\" \"!**/generated/**\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
     "validate": "run-p check-format lint build"
+  },
+  "nodemonConfig": {
+    "exec": "node -r ./backend/bootstrap.js ./backend/dist/src"
   },
   "husky": {
     "hooks": {
@@ -46,6 +49,8 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "husky": "^4.0.6",

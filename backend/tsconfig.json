@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "lib": ["dom", "es6", "esnext"],
-    "rootDir": "src",
+    "rootDir": "./",
     "outDir": "dist",
     "moduleResolution": "node",
     "declaration": false,
@@ -12,10 +12,12 @@
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "esModuleInterop": true,
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@prisma": ["generated/prisma-client"],
-      "~/*": ["*"]
+      "@prisma": ["./src/generated/prisma-client"],
+      "~/*": ["./src/*"]
     }
-  }
+  },
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts"]
 }

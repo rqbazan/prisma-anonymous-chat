@@ -5,6 +5,6 @@ const { compilerOptions } = require('./tsconfig.json')
 dotenv.config()
 
 tsConfigPaths.register({
-  baseUrl: compilerOptions.outDir,
+  baseUrl: './backend/dist',
   paths: compilerOptions.paths
 })

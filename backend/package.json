@@ -7,18 +7,6 @@
   "engines": {
     "node": "12.x"
   },
-  "scripts": {
-    "tsc:watch": "tsc -w",
-    "nodemon": "nodemon",
-    "dev": "run-p tsc:watch nodemon",
-    "start": "NODE_ENV=production node dist",
-    "build:tsc": "tsc --noEmit",
-    "build:tspm": "ef-tspm",
-    "build": "run-s build:*"
-  },
-  "nodemonConfig": {
-    "exec": "node -r ./bootstrap.js dist"
-  },
   "dependencies": {
     "graphql-yoga": "^1.18.3",
     "nanoid": "^2.1.9",

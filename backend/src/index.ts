@@ -1,24 +1,37 @@
+import createNextServer from 'next'
 import { prisma } from '@prisma'
 import { GraphQLServer, Options as YogaOptions } from 'graphql-yoga'
+import createAppRouter from './router'
 import resolvers from './resolvers'
 
-const server = new GraphQLServer({
-  resolvers,
-  typeDefs: './src/resolvers/schema.graphql',
-  context: ({ request }) => ({
-    prisma,
-    req: request,
-    userId: request.headers['non-secret-user-id']
-  })
-})
-
-const options: YogaOptions = {
+const yogaOptions: YogaOptions = {
   port: process.env.PORT || '4000',
-  endpoint: '/graphql',
-  subscriptions: '/subscriptions',
-  playground: '/playground'
+  endpoint: '/api/graphql',
+  subscriptions: '/api/subscriptions',
+  playground: '/api/playground'
 }
 
-server.start(options, () => {
-  console.log(`Server is running on http://localhost:${options.port} 🎉`)
+const nextOptions = {
+  dev: process.env.NODE_ENV !== 'production',
+  dir: 'frontend'
+}
+
+const nextServer = createNextServer(nextOptions)
+
+nextServer.prepare().then(() => {
+  const graphQLServer = new GraphQLServer({
+    resolvers,
+    typeDefs: './backend/src/resolvers/schema.graphql',
+    context: ({ request }) => ({
+      prisma,
+      req: request,
+      userId: request.headers['non-secret-user-id']
+    })
+  })
+
+  graphQLServer.express.use(createAppRouter(nextServer))
+
+  graphQLServer.start(yogaOptions, ({ port }) => {
+    console.log(`Server is running on http://localhost:${port} 🎉`)
+  })
 })
