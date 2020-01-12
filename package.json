@@ -16,6 +16,7 @@
     "build": "run-p build:*",
     "build:frontend": "next build frontend",
     "build:backend": "tsc -p backend && ef-tspm -c backend/tsconfig.json -r backend",
+    "start": "NODE_ENV=production node ./backend/dist/src",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|js|json)\" \"!**/generated/**\"",
     "format": "yarn prettier --write",
