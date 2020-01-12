@@ -46,7 +46,8 @@ export default function UpdateUserInfoModal({ user, controller }) {
           autoFocus
           error={errors.nickname?.message}
           inputRef={register({
-            required: { value: true, message: 'Enter your favorite nickname' }
+            required: { value: true, message: 'Enter your favorite nickname' },
+            validate: value => value !== user.nickname
           })}
         />
       </Box>
