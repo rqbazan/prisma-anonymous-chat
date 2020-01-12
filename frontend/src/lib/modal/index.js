@@ -25,6 +25,22 @@ export function ModalProvider({ children }) {
   )
 }
 
+function Escapable({ children, onEscape }) {
+  React.useEffect(() => {
+    const closeModalByEsc = e => {
+      if (e.key === 'Escape') {
+        onEscape()
+      }
+    }
+
+    document.addEventListener('keydown', closeModalByEsc)
+
+    return () => document.removeEventListener('keydown', closeModalByEsc)
+  }, [])
+
+  return children
+}
+
 let canvasEl = null
 
 export function ModalCanvas() {
@@ -42,24 +58,26 @@ export function ModalCanvas() {
   return (
     <>
       {ReactDOM.createPortal(
-        <CanvasContainer>
-          <ModalContainer>
-            <Box position="relative">
-              <Box
-                role="button"
-                position="absolute"
-                right="0"
-                onClick={() => controller.close()}
-              >
-                <CloseIcon />
+        <Escapable onEscape={controller.close}>
+          <CanvasContainer onClick={controller.close}>
+            <ModalContainer onClick={e => e.stopPropagation()}>
+              <Box position="relative">
+                <Box
+                  role="button"
+                  position="absolute"
+                  right="0"
+                  onClick={controller.close}
+                >
+                  <CloseIcon />
+                </Box>
+                {React.createElement(modal.component, {
+                  controller,
+                  ...modal.props
+                })}
               </Box>
-              {React.createElement(modal.component, {
-                controller,
-                ...modal.props
-              })}
-            </Box>
-          </ModalContainer>
-        </CanvasContainer>,
+            </ModalContainer>
+          </CanvasContainer>
+        </Escapable>,
         canvasEl
       )}
       <GlobalStyle />
