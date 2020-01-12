@@ -1,7 +1,7 @@
 import { UserNullablePromise } from '@prisma'
 import { Resolver } from '~/types'
 
-const updateNickname: Resolver<UserNullablePromise> = (
+const updateUser: Resolver<UserNullablePromise> = (
   _,
   { nickname },
   { userId, prisma }
@@ -13,5 +13,5 @@ const updateNickname: Resolver<UserNullablePromise> = (
 }
 
 export default {
-  updateNickname
+  updateUser
 }

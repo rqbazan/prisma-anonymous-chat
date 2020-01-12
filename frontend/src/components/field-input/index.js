@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@xstyled/styled-components'
-import Input from '../input'
 import FieldError from '../field-error'
+import { Input } from './elements'
 
 export default function FieldInput({
   label,
@@ -9,6 +9,7 @@ export default function FieldInput({
   error,
   className,
   style,
+  inputRef,
   ...props
 }) {
   return (
@@ -20,7 +21,7 @@ export default function FieldInput({
     >
       <label htmlFor={name}>
         {label}
-        <Input {...props} />
+        <Input ref={inputRef} name={name} {...props} />
       </label>
       {error && (
         <Box mt="1">

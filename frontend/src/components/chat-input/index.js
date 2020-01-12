@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@xstyled/styled-components'
-import { Input } from './elements'
+import Input from '~/components/input'
 
 export default function ChatInput() {
   return (
