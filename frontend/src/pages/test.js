@@ -1,10 +1,10 @@
 import React from 'react'
-import FieldError from '~/components/field-error'
+import FieldInput from '~/components/field-input'
 
 export default () => {
   return (
     <>
-      <FieldError>lalal</FieldError>
+      <FieldInput label="Nickname" error="lalalalala" />
     </>
   )
 }

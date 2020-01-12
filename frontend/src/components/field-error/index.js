@@ -6,11 +6,12 @@ export default function FieldError({ children }) {
     <Box
       display="flex"
       borderRadius="default"
-      backgroundColor="red.4"
+      backgroundColor="red.3"
       px="2"
       py="2"
       alignItems="center"
       fontSize="0"
+      color="red.8"
     >
       {children}
     </Box>

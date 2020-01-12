@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@xstyled/styled-components'
-import Input from '../input'
 import FieldError from '../field-error'
+import { Input } from './elements'
 
 export default function FieldInput({
   label,
