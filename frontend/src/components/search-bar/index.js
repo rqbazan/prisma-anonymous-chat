@@ -7,12 +7,13 @@ import { Input } from './elements'
 export default function SearchBar({
   style,
   className,
-  onLoading,
+  onSearching,
+  onSearch,
   onChange,
   ...props
 }) {
-  const debouncedOnChange = React.useCallback(debounce(onChange, 1000), [
-    onChange
+  const debouncedOnSearch = React.useCallback(debounce(onSearch, 1000), [
+    onSearch
   ])
 
   return (
@@ -34,8 +35,9 @@ export default function SearchBar({
       <Input
         {...props}
         onChange={e => {
-          onLoading(true)
-          debouncedOnChange(e.target.value)
+          onSearching(true)
+          onChange(e)
+          debouncedOnSearch(e.target.value)
         }}
       />
     </Box>

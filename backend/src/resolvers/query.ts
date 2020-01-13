@@ -1,24 +1,42 @@
-import { UserNullablePromise, User, Category } from '@prisma'
+import { UserNullablePromise, Category, User } from '@prisma'
 import { Resolver } from '~/types'
 
 const whoami: Resolver<UserNullablePromise> = (_, { userId }, { prisma }) => {
   return prisma.user({ id: userId })
 }
 
-const search: Resolver<User[] | Category[]> = async (
-  _,
-  { displayNameLike },
-  { prisma }
-) => {
-  if (displayNameLike.startsWith('#')) {
-    return prisma.categories({
-      where: { name_contains: displayNameLike.slice(1) }
-    })
+const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
+  function normalize(type: 'CATEGORY' | 'USER') {
+    return (obj: Category | User) => ({ ...obj, type })
   }
 
-  return prisma.users({
-    where: { nickname_contains: displayNameLike }
-  })
+  if (displayNameLike.startsWith('#')) {
+    const categories = await prisma.categories({
+      where: { name_contains: displayNameLike.slice(1) },
+      orderBy: 'name_ASC',
+      first: 10
+    })
+
+    return categories.map(normalize('CATEGORY'))
+  }
+
+  const [users, categories] = await Promise.all([
+    prisma.users({
+      where: { nickname_contains: displayNameLike },
+      orderBy: 'nickname_ASC',
+      first: 10
+    }),
+    prisma.categories({
+      where: { name_contains: displayNameLike },
+      orderBy: 'name_ASC',
+      first: 10
+    })
+  ])
+
+  return [
+    ...users.map(normalize('USER')),
+    ...categories.map(normalize('CATEGORY'))
+  ]
 }
 
 export default {

@@ -1,36 +1,31 @@
-enum ChatEnum {
-  PRIVATE
-  GROUP
-}
-
-enum SearchableEnum {
+enum ChannelType {
   USER
   CATEGORY
+}
+
+interface Node {
+  id: ID!
 }
 
 interface Chat {
   id: ID!
   lastMessage: Message!
-  type: ChatEnum!
 }
 
-interface Searchable {
+type Channel {
   id: ID!
   displayName: String!
-  type: SearchableEnum!
+  name: String!
+  type: ChannelType!
 }
 
-type User implements Searchable {
+type User implements Node {
   id: ID!
-  displayName: String!
-  type: SearchableEnum!
   nickname: String!
 }
 
-type Category implements Searchable {
+type Category implements Node {
   id: ID!
-  displayName: String!
-  type: SearchableEnum!
   slug: String!
   name: String!
 }
@@ -44,7 +39,6 @@ type Message {
 type PrivateChat implements Chat {
   id: ID!
   lastMessage: Message!
-  type: ChatEnum!
   messages: [Message]
   messenger: User
 }
@@ -52,14 +46,13 @@ type PrivateChat implements Chat {
 type GroupChat implements Chat {
   id: ID!
   lastMessage: Message!
-  type: ChatEnum!
   messages: [Message]
   participates: [User]
 }
 
 type Query {
   whoami(userId: ID!): User!
-  search(displayNameLike: String!): [Searchable]
+  search(displayNameLike: String!): [Channel]
   chats: [Chat]
   getChat(chatId: ID!): Chat
 }

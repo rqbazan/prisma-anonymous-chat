@@ -18,3 +18,5 @@ export default function ChatPreview({ chat, isSelected, ...props }) {
     </Container>
   )
 }
+
+ChatPreview.Container = Container

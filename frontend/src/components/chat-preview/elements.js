@@ -18,6 +18,10 @@ export const Container = styled.box.attrs({ role: 'button' })`
   &:hover {
     ${hoveredStyle}
   }
+
+  &:focus {
+    outline: none;
+  }
 `
 
 export const MessageContent = styled.span`

@@ -33,7 +33,7 @@ const chats = {
 }
 
 export default function Chat({ chatName }) {
-  const chat = chats[chatName]
+  const chat = chats[chatName] || chats.ricardo
 
   return (
     <>
