@@ -7,6 +7,19 @@
   "engines": {
     "node": "12.x"
   },
+  "scripts": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,json}": [
+      "prettier --ignore-path ../.gitignore --write",
+      "git add"
+    ],
+    "*.ts": [
+      "eslint --ignore-path ../.gitignore --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "graphql-yoga": "^1.18.3",
     "heroku-ssl-redirect": "^0.0.4",

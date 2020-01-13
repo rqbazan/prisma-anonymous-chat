@@ -7,6 +7,19 @@
   "engines": {
     "node": "12.x"
   },
+  "scripts": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --ignore-path ../.gitignore --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --ignore-path ../.gitignore --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@apollo/react-ssr": "^3.1.3",
