@@ -8,5 +8,8 @@ export default {
   Category: {
     displayName: (category: Category) => `#${category.name}`,
     type: () => 'CATEGORY'
+  },
+  Searchable: {
+    __resolveType: obj => (obj.nickname ? 'User' : 'Category')
   }
 }

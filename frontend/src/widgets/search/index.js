@@ -47,7 +47,7 @@ function MockList({ user, chatName }) {
   )
 }
 
-function SearchLoading() {
+function SearchLoader() {
   return (
     <Box p="3" display="flex" alignItems="center">
       <Loader dark size={24} />
@@ -85,7 +85,7 @@ export default function Search({ user, chatName }) {
         {/* eslint-disable-next-line */}
         {viewSearching ? (
           searching ? (
-            <SearchLoading />
+            <SearchLoader />
           ) : (
             <Box p="5" height="full">
               <img
