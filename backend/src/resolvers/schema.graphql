@@ -1,6 +1,6 @@
 enum ChannelType {
   p
-  c
+  g
 }
 
 interface Node {
@@ -58,8 +58,11 @@ type Query {
 }
 
 type Mutation {
-  sendPrivateMessage(receiverId: ID!): Message!
-  sendGroupMessage(categoryId: ID!): Message!
+  sendMessage(
+    content: String!
+    receiverId: ID!
+    channelType: ChannelType
+  ): Message!
   updateUser(nickname: String!): User!
   hideMessage(messageId: ID!): Message!
 }

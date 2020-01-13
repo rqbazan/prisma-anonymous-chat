@@ -9,6 +9,7 @@ type Message {
   content: String!
   createdAt: DateTime! @createdAt
   author: User!
+  chat: Chat!
 }
 
 type Category {
@@ -19,6 +20,12 @@ type Category {
 # } Basic Types
 
 # { Relational Types
+type Chat {
+  id: ID! @id
+  private: PrivateChat
+  group: GroupChat
+}
+
 type PrivateChat {
   id: ID! @id
   participateA: User! @relation(name: "ParticipateA")
