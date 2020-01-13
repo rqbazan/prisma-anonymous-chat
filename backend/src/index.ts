@@ -1,18 +1,28 @@
 import createNextServer from 'next'
 import { prisma } from '@prisma'
 import { GraphQLServer, Options as YogaOptions } from 'graphql-yoga'
+import sslRedirect from 'heroku-ssl-redirect'
 import createAppRouter from './router'
 import resolvers from './resolvers'
 
+const dev = process.env.NODE_ENV !== 'production'
+const port = process.env.PORT || '4000'
+
 const yogaOptions: YogaOptions = {
-  port: process.env.PORT || '4000',
+  port,
   endpoint: '/api/graphql',
   subscriptions: '/api/subscriptions',
-  playground: '/api/playground'
+  playground: '/api/playground',
+  cors: {
+    credentials: true,
+    origin: dev
+      ? [process.env.SERVER_URL!, `http://192.168.1.132:${port}`]
+      : process.env.SERVER_URL
+  }
 }
 
 const nextOptions = {
-  dev: process.env.NODE_ENV !== 'production',
+  dev,
   dir: 'frontend'
 }
 
@@ -29,9 +39,10 @@ nextServer.prepare().then(() => {
     })
   })
 
+  graphQLServer.express.use(sslRedirect(['production']))
   graphQLServer.express.use(createAppRouter(nextServer))
 
-  graphQLServer.start(yogaOptions, ({ port }) => {
+  graphQLServer.start(yogaOptions, () => {
     console.log(`Server is running on http://localhost:${port} 🎉`)
   })
 })
