@@ -18,6 +18,10 @@ export default (nextServer: ReturnType<typeof createNextServer>) => {
     res.redirect(`/${newUser.id}`)
   })
 
+  appRouter.get('/api/prisma', async (_, res) => {
+    res.redirect(process.env.PRISMA_URL!)
+  })
+
   appRouter.get(
     '/:userId/:channelType?/:channelName?',
     async (req, res, forward) => {
