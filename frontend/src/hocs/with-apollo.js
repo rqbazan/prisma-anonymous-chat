@@ -12,9 +12,14 @@ import getNonSecretId from '../utils/get-non-secret-id'
 let cachedApolloClient = null
 
 function createApolloClient(initialState = {}) {
+  const origin =
+    typeof window === 'undefined'
+      ? process.env.SERVER_URL
+      : window.location.origin
+
   const httpLink = createHttpLink({
     fetch,
-    uri: `${process.env.API_URL}/graphql`,
+    uri: `${origin}/api/graphql`,
     credentials: 'same-origin'
   })
 
