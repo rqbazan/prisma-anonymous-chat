@@ -39,7 +39,7 @@ nextServer.prepare().then(() => {
     })
   })
 
-  graphQLServer.use(sslRedirect(['production']))
+  graphQLServer.express.use(sslRedirect(['production']))
   graphQLServer.express.use(createAppRouter(nextServer))
 
   graphQLServer.start(yogaOptions, () => {
