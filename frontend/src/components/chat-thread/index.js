@@ -12,7 +12,7 @@ function Message({ content, author, isOneOfMine }) {
     >
       {!isOneOfMine && (
         <Box mr="2">
-          <Avatar nickname={author.nickname} size="tiny" />
+          <Avatar nickname={author.nickname} variant="tiny" />
         </Box>
       )}
       <Box

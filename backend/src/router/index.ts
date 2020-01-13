@@ -18,19 +18,28 @@ export default (nextServer: ReturnType<typeof createNextServer>) => {
     res.redirect(`/${newUser.id}`)
   })
 
-  appRouter.get('/:userId/:chatName?', async (req, res, forward) => {
-    if (req.url.startsWith('/_next') || req.url.startsWith('/api')) {
-      return forward()
+  appRouter.get(
+    '/:userId/:channelType?/:channelName?',
+    async (req, res, forward) => {
+      if (req.url.startsWith('/_next') || req.url.startsWith('/api')) {
+        return forward()
+      }
+
+      const { userId } = req.params
+
+      if (req.params.channelType && !req.params.channelName) {
+        return res.redirect(`/${userId}`)
+      }
+
+      const user = await getUser(prisma, userId)
+
+      return nextServer.render(req, res, '/', {
+        userId: user.id,
+        channelType: req.params.channelType,
+        channelName: req.params.channelName
+      })
     }
-
-    const { userId } = req.params
-    const user = await getUser(prisma, userId)
-
-    return nextServer.render(req, res, '/', {
-      userId: user.id,
-      chatName: req.params.chatName
-    })
-  })
+  )
 
   appRouter.use((req, res, forward) => {
     if (req.url.startsWith('/api')) {

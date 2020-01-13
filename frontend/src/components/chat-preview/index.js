@@ -7,9 +7,9 @@ import {
 } from './elements'
 import Avatar from '../avatar'
 
-export default function ChatPreview({ chat, isSelected, ...props }) {
+export default function ChatPreview({ chat, selected, ...props }) {
   return (
-    <Container {...props} isSelected={isSelected}>
+    <Container {...props} selected={selected}>
       <Avatar nickname={chat.displayName} />
       <InfoContainer>
         <MessengerNickName>{chat.displayName}</MessengerNickName>
@@ -18,3 +18,5 @@ export default function ChatPreview({ chat, isSelected, ...props }) {
     </Container>
   )
 }
+
+ChatPreview.Container = Container

@@ -8,7 +8,7 @@ export const Container = styled.box.attrs({ role: 'button' })`
   display: flex;
   padding: 2;
 
-  ${props => props.isSelected && hoveredStyle}
+  ${props => props.selected && hoveredStyle}
 
   &:not(:last-child) {
     border-bottom: 1px solid;
@@ -17,6 +17,10 @@ export const Container = styled.box.attrs({ role: 'button' })`
 
   &:hover {
     ${hoveredStyle}
+  }
+
+  &:focus {
+    outline: none;
   }
 `
 

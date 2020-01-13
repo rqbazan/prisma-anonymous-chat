@@ -1,12 +1,9 @@
-import { User, Category } from '@prisma'
-
 export default {
-  User: {
-    displayName: (user: User) => user.nickname,
-    type: () => 'USER'
+  Node: {
+    __resolveType: obj => (obj.nickname ? 'User' : 'Category')
   },
-  Category: {
-    displayName: (category: Category) => `#${category.name}`,
-    type: () => 'CATEGORY'
+  Channel: {
+    name: obj => (obj.type === 'p' ? obj.nickname : obj.name),
+    displayName: obj => (obj.type === 'p' ? obj.nickname : `#${obj.name}`)
   }
 }

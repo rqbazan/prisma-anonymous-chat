@@ -22,7 +22,7 @@ export default function ChatHeader({ chat }) {
       >
         <Icon name="back" />
       </Box>
-      <Avatar nickname={chat.displayName} size="small" />
+      <Avatar nickname={chat.displayName} variant="small" />
       <Box ml="2" fontSize="3" alignSelf="center" fontWeight="500">
         {chat.displayName}
       </Box>
