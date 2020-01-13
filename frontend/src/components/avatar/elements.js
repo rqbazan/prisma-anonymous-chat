@@ -16,7 +16,7 @@ const sizeVariants = {
   `
 }
 
-export const Container = styled.div`
+export const Container = styled.box`
   align-items: center;
   border-radius: 50%;
   display: flex;
@@ -26,5 +26,5 @@ export const Container = styled.div`
   user-select: none;
   width: 12;
 
-  ${({ size }) => sizeVariants[size]};
+  ${({ variant }) => sizeVariants[variant]};
 `

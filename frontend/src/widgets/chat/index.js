@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import ChatHeader from '~/components/chat-header'
 import ChatInput from '~/components/chat-input'
 import ChatThread from '~/components/chat-thread'
@@ -32,8 +33,24 @@ const chats = {
   }
 }
 
-export default function Chat({ chatName }) {
-  const chat = chats[chatName] || chats.ricardo
+function getMockChat({ channelName, channelType }) {
+  const isPrivate = channelType === 'p'
+
+  const chat = isPrivate ? chats.ricardo : chats.reactjs
+
+  if (isPrivate) {
+    chat.displayName = channelName
+  } else {
+    chat.displayName = `#${channelName}`
+  }
+
+  return chat
+}
+
+export default function Chat() {
+  const { query } = useRouter()
+
+  const chat = getMockChat(query)
 
   return (
     <>

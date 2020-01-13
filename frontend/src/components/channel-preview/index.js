@@ -6,7 +6,7 @@ import ChatPreview from '../chat-preview'
 export default function ChannelPreview({ channel, ...props }) {
   return (
     <ChatPreview.Container {...props}>
-      <Avatar nickname={channel.displayName} size="tiny" />
+      <Avatar nickname={channel.displayName} variant="tiny" />
       <Box display="flex" ml="2" alignItems="center" fontSize="0">
         {channel.displayName}
       </Box>

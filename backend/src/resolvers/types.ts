@@ -3,7 +3,7 @@ export default {
     __resolveType: obj => (obj.nickname ? 'User' : 'Category')
   },
   Channel: {
-    name: obj => (obj.type === 'USER' ? obj.nickname : obj.name),
-    displayName: obj => (obj.type === 'USER' ? obj.nickname : `#${obj.name}`)
+    name: obj => (obj.type === 'p' ? obj.nickname : obj.name),
+    displayName: obj => (obj.type === 'p' ? obj.nickname : `#${obj.name}`)
   }
 }

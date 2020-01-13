@@ -18,7 +18,7 @@ export default function Avatar({
   style,
   className,
   nickname,
-  size = 'normal'
+  variant = 'normal'
 }) {
   const shortened = getHashCode(nickname) % 360
 
@@ -27,13 +27,11 @@ export default function Avatar({
 
   return (
     <Container
+      style={style}
       className={className}
-      size={size}
-      style={{
-        ...style,
-        backgroundColor: bgColor,
-        color: textColor
-      }}
+      variant={variant}
+      backgroundColor={bgColor}
+      color={textColor}
     >
       {nickname.slice(0, 2)}
     </Container>

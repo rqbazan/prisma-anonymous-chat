@@ -1,55 +1,12 @@
 import React from 'react'
-import Link from 'next/link'
 import Router from 'next/router'
 import { Box } from '@xstyled/styled-components'
 import { useApolloClient } from '@apollo/react-hooks'
 import SearchBar from '~/components/search-bar'
-import ChatPreview from '~/components/chat-preview'
 import ChannelPreview from '~/components/channel-preview'
 import Loader from '~/components/loader'
 import searchQuery from '~/graphql/search'
-
-function MockList({ user, chatName }) {
-  return (
-    <>
-      {Array.from({ length: 50 }).map((v, index) => (
-        <Link
-          scroll={false}
-          href={{
-            pathname: '/',
-            query: {
-              chatName: index % 2 ? 'ricardo' : 'reactjs',
-              userId: user.id
-            }
-          }}
-          as={index % 2 ? `/${user.id}/ricardo` : `/${user.id}/reactjs`}
-        >
-          {index % 2 ? (
-            <ChatPreview
-              isSelected={chatName === 'ricardo'}
-              chat={{
-                isPrivate: true,
-                displayName: 'ricardo',
-                messenger: { nickname: 'ricardo' },
-                lastMessage: { content: 'hello there my friend' }
-              }}
-            />
-          ) : (
-            <ChatPreview
-              isSelected={chatName === 'reactjs'}
-              chat={{
-                isPrivate: false,
-                displayName: '#reactjs',
-                category: { name: 'reactjs' },
-                lastMessage: { content: 'hello there my friend' }
-              }}
-            />
-          )}
-        </Link>
-      ))}
-    </>
-  )
-}
+import MockList from './mock-list'
 
 function SearchLoader() {
   return (
@@ -67,7 +24,7 @@ const initialState = {
   term: ''
 }
 
-export default function Search({ user, chatName }) {
+export default function Search({ user }) {
   const apolloClient = useApolloClient()
 
   const [state, setState] = React.useReducer(
@@ -91,7 +48,7 @@ export default function Search({ user, chatName }) {
 
   function renderContent() {
     if (!state.viewSearching) {
-      return <MockList user={user} chatName={chatName} />
+      return <MockList />
     }
 
     if (state.searching) {
@@ -119,11 +76,12 @@ export default function Search({ user, chatName }) {
           {
             pathname: '/',
             query: {
-              chatName: channel.name,
+              channelType: channel.type,
+              channelName: channel.name,
               userId: user.id
             }
           },
-          `/${user.id}/${channel.name}`
+          `/${user.id}/${channel.type}/${channel.name}`
         )
         setState(initialState)
       }
@@ -131,7 +89,7 @@ export default function Search({ user, chatName }) {
       return (
         <ChannelPreview
           data-is-channel-preview
-          tabindex="0"
+          tabIndex="0"
           channel={channel}
           onClick={goToChannel}
           onKeyPress={goToChannel}

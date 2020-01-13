@@ -1,6 +1,6 @@
 enum ChannelType {
-  USER
-  CATEGORY
+  p
+  c
 }
 
 interface Node {

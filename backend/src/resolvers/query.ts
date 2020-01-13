@@ -6,7 +6,7 @@ const whoami: Resolver<UserNullablePromise> = (_, { userId }, { prisma }) => {
 }
 
 const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
-  function normalize(type: 'CATEGORY' | 'USER') {
+  function normalize(type: 'p' | 'c') {
     return (obj: Category | User) => ({ ...obj, type })
   }
 
@@ -17,7 +17,7 @@ const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
       first: 10
     })
 
-    return categories.map(normalize('CATEGORY'))
+    return categories.map(normalize('c'))
   }
 
   const [users, categories] = await Promise.all([
@@ -33,10 +33,7 @@ const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
     })
   ])
 
-  return [
-    ...users.map(normalize('USER')),
-    ...categories.map(normalize('CATEGORY'))
-  ]
+  return [...users.map(normalize('p')), ...categories.map(normalize('c'))]
 }
 
 export default {
