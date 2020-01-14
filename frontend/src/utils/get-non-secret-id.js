@@ -1,6 +1,10 @@
 let cachedUserId = null
 
-export default function getNonSecretId() {
+export default function getNonSecretId(ctx) {
+  if (typeof window === 'undefined') {
+    return ctx.req.sessionId
+  }
+
   if (cachedUserId) {
     return cachedUserId
   }

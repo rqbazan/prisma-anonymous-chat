@@ -8,6 +8,6 @@
   "rules": {
     "import/extensions": "off",
     "import/no-unresolved": "off",
-    "@typescript-eslint/camelcase": "off"
+    "@typescript-eslint/ban-ts-ignore": "off"
   }
 }

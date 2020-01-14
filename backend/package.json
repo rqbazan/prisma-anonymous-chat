@@ -9,7 +9,7 @@
   },
   "scripts": {
     "pre-commit": "lint-staged",
-    "generate": "prisma generate"
+    "generate": "export $(cat ../.env | xargs) && prisma generate"
   },
   "lint-staged": {
     "*.{ts,json}": [

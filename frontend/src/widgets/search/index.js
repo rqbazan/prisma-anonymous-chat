@@ -6,7 +6,7 @@ import SearchBar from '~/components/search-bar'
 import ChannelPreview from '~/components/channel-preview'
 import Loader from '~/components/loader'
 import searchQuery from '~/graphql/search'
-import MockList from './mock-list'
+import Chats from './chats'
 
 function SearchLoader() {
   return (
@@ -48,7 +48,7 @@ export default function Search({ user }) {
 
   function renderContent() {
     if (!state.viewSearching) {
-      return <MockList />
+      return <Chats />
     }
 
     if (state.searching) {

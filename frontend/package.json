@@ -8,7 +8,8 @@
     "node": "12.x"
   },
   "scripts": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "generate": "graphql-codegen"
   },
   "lint-staged": {
     "*.{js,json}": [
@@ -42,6 +43,8 @@
     "zeit-toast-clone": "^0.0.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.11.2",
+    "@graphql-codegen/fragment-matcher": "^1.11.2",
     "@zeit/next-css": "^1.0.1",
     "babel-plugin-graphql-tag": "^2.5.0",
     "babel-plugin-module-resolver": "^4.0.0",

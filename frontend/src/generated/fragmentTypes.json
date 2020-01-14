@@ -1,0 +1,18 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "Chat",
+        "possibleTypes": [
+          {
+            "name": "PrivateChat"
+          },
+          {
+            "name": "GroupChat"
+          }
+        ]
+      }
+    ]
+  }
+}

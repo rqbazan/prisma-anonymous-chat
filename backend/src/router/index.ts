@@ -37,6 +37,9 @@ export default (nextServer: ReturnType<typeof createNextServer>) => {
 
       const user = await getUser(prisma, userId)
 
+      // @ts-ignore
+      req.sessionId = user.id
+
       return nextServer.render(req, res, '/', {
         userId: user.id,
         channelType: req.params.channelType,
