@@ -6,7 +6,7 @@ function isUser(channel: any): channel is User {
 }
 
 function isPrivateChat(wellKnowChat: any): wellKnowChat is PrivateChat {
-  return (wellKnowChat as WellKnowChat).type === ChannelType.PRIVATE
+  return (wellKnowChat as WellKnowChat).channelType === ChannelType.PRIVATE
 }
 
 const ChannelResolver = {
@@ -27,9 +27,6 @@ const MessageResolver = {
 const ChatResolver = {
   __resolveType: (obj: WellKnowChat) => {
     return isPrivateChat(obj) ? 'PrivateChat' : 'GroupChat'
-  },
-  channelType: (obj: WellKnowChat) => {
-    return isPrivateChat(obj) ? ChannelType.PRIVATE : ChannelType.GROUP
   },
   messages: ({ id }, _, { prisma }: Context) => {
     return prisma.messages({

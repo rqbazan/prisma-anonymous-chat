@@ -1,5 +1,18 @@
-import { UserNullablePromise, Category, User } from '@prisma'
+import {
+  UserNullablePromise,
+  Category,
+  User,
+  PrivateChat,
+  GroupChat
+} from '@prisma'
 import { Resolver, Channel, ChannelType, WellKnowChat } from '~/types'
+
+function toWellKnowChat(
+  chat: PrivateChat | GroupChat,
+  channelType: ChannelType
+): WellKnowChat {
+  return { ...chat, channelType }
+}
 
 const whoami: Resolver<UserNullablePromise> = (_, { userId }, { prisma }) => {
   return prisma.user({ id: userId })
@@ -62,13 +75,30 @@ const chats: Resolver<WellKnowChat[]> = async (_, __, { userId, prisma }) => {
   ])
 
   return [
-    ...privateChats.map(chat => ({ ...chat, type: ChannelType.PRIVATE })),
-    ...groupChats.map(chat => ({ ...chat, type: ChannelType.GROUP }))
+    ...privateChats.map(chat => toWellKnowChat(chat, ChannelType.PRIVATE)),
+    ...groupChats.map(chat => toWellKnowChat(chat, ChannelType.GROUP))
   ]
+}
+
+const getChat: Resolver<
+  WellKnowChat,
+  {},
+  { chatId: string; channelType: ChannelType }
+> = async (_, { chatId, channelType }, { prisma }) => {
+  let chat
+
+  if (channelType === ChannelType.PRIVATE) {
+    chat = await prisma.privateChat({ id: chatId })
+  } else {
+    chat = await prisma.groupChat({ id: chatId })
+  }
+
+  return toWellKnowChat(chat, channelType)
 }
 
 export default {
   whoami,
   search,
-  chats
+  chats,
+  getChat
 }

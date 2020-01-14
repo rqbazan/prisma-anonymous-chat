@@ -21,4 +21,6 @@ export interface Channel {
   type: ChannelType
 }
 
-export type WellKnowChat = (PrivateChat | GroupChat) & { type: ChannelType }
+export type WellKnowChat = (PrivateChat | GroupChat) & {
+  channelType: ChannelType
+}

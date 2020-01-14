@@ -55,7 +55,7 @@ type Query {
   whoami(userId: ID!): User!
   search(displayNameLike: String!): [Channel]
   chats: [Chat]
-  getChat(chatId: ID!): Chat
+  getChat(chatId: ID!, channelType: ChannelType!): Chat
 }
 
 type Mutation {
