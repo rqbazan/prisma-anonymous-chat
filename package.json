@@ -21,7 +21,8 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|js|json)\" \"!**/generated/**\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
-    "validate": "run-p check-format lint build"
+    "validate": "run-p check-format lint build",
+    "generate": "export $(cat .env | xargs) && yarn workspace backend run generate"
   },
   "nodemonConfig": {
     "exec": "node -r ./backend/bootstrap.js ./backend/dist/src",

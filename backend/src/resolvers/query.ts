@@ -1,11 +1,5 @@
-import {
-  UserNullablePromise,
-  Category,
-  User,
-  PrivateChat,
-  GroupChat
-} from '@prisma'
-import { Resolver, Channel } from '~/types'
+import { UserNullablePromise, Category, User } from '@prisma'
+import { Resolver, Channel, ChannelType, WellKnowChat } from '~/types'
 
 const whoami: Resolver<UserNullablePromise> = (_, { userId }, { prisma }) => {
   return prisma.user({ id: userId })
@@ -16,7 +10,7 @@ const search: Resolver<Channel[]> = async (
   { displayNameLike },
   { prisma }
 ) => {
-  function channelMapper(type: 'p' | 'g') {
+  function channelMapper(type: ChannelType) {
     return (obj: Category | User): Channel => ({ ...obj, type })
   }
 
@@ -27,7 +21,7 @@ const search: Resolver<Channel[]> = async (
       first: 10
     })
 
-    return categories.map(channelMapper('g'))
+    return categories.map(channelMapper(ChannelType.GROUP))
   }
 
   const [users, categories] = await Promise.all([
@@ -44,16 +38,12 @@ const search: Resolver<Channel[]> = async (
   ])
 
   return [
-    ...users.map(channelMapper('p')),
-    ...categories.map(channelMapper('g'))
+    ...users.map(channelMapper(ChannelType.PRIVATE)),
+    ...categories.map(channelMapper(ChannelType.GROUP))
   ]
 }
 
-const chats: Resolver<(PrivateChat | GroupChat)[]> = async (
-  _,
-  __,
-  { userId, prisma }
-) => {
+const chats: Resolver<WellKnowChat[]> = async (_, __, { userId, prisma }) => {
   const [privateChats, groupChats] = await Promise.all([
     prisma.privateChats({
       where: {
@@ -72,8 +62,8 @@ const chats: Resolver<(PrivateChat | GroupChat)[]> = async (
   ])
 
   return [
-    ...privateChats.map(chat => ({ ...chat, private: true })),
-    ...groupChats.map(chat => ({ ...chat, private: false }))
+    ...privateChats.map(chat => ({ ...chat, type: ChannelType.PRIVATE })),
+    ...groupChats.map(chat => ({ ...chat, type: ChannelType.GROUP }))
   ]
 }
 

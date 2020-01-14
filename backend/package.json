@@ -8,7 +8,8 @@
     "node": "12.x"
   },
   "scripts": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "generate": "prisma generate"
   },
   "lint-staged": {
     "*.{ts,json}": [
