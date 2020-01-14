@@ -3,15 +3,6 @@ enum ChannelType {
   g
 }
 
-interface Node {
-  id: ID!
-}
-
-interface Chat {
-  id: ID!
-  lastMessage: Message!
-}
-
 type Channel {
   id: ID!
   displayName: String!
@@ -19,14 +10,13 @@ type Channel {
   type: ChannelType!
 }
 
-type User implements Node {
+type User {
   id: ID!
   nickname: String!
 }
 
-type Category implements Node {
+type Category {
   id: ID!
-  slug: String!
   name: String!
 }
 
@@ -36,17 +26,25 @@ type Message {
   author: User!
 }
 
+interface Chat {
+  id: ID!
+  lastMessage: Message!
+  messages: [Message]
+}
+
 type PrivateChat implements Chat {
   id: ID!
   lastMessage: Message!
   messages: [Message]
-  messenger: User
+  participateA: User!
+  participateB: User!
 }
 
 type GroupChat implements Chat {
   id: ID!
   lastMessage: Message!
   messages: [Message]
+  category: Category!
   participates: [User]
 }
 

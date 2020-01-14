@@ -20,10 +20,14 @@ type Category {
 # } Basic Types
 
 # { Relational Types
+enum ChatType {
+  PRIVATE
+  GROUP
+}
+
 type Chat {
   id: ID! @id
-  private: PrivateChat
-  group: GroupChat
+  type: ChatType
 }
 
 type PrivateChat {

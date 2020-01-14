@@ -5,7 +5,7 @@ import ChatPreview from '~/components/chat-preview'
 const channels = [
   {
     channelName: 'gzi12n',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'tdtwaq',
@@ -25,7 +25,7 @@ const channels = [
   },
   {
     channelName: 'ya7wlp',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'j23ih7',
@@ -33,15 +33,15 @@ const channels = [
   },
   {
     channelName: 'en1z3t',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'd7co9o',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'wgrlv',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: '7b7tmh',
@@ -49,27 +49,27 @@ const channels = [
   },
   {
     channelName: '09qzy',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'kcgg7',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: '5mfn5e',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'jcou0i',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: '7h6v0c',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'mxim2',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'jfaw5e',
@@ -89,15 +89,15 @@ const channels = [
   },
   {
     channelName: '3me5t',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'h59p5s',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'gsggte',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'h6qtu',
@@ -105,7 +105,7 @@ const channels = [
   },
   {
     channelName: 'kt4jje',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'z35zk',
@@ -117,7 +117,7 @@ const channels = [
   },
   {
     channelName: '1ndo8a',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: '0d0la2',
@@ -129,11 +129,11 @@ const channels = [
   },
   {
     channelName: 'trgdv8',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'nm5zokf',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: '0ywaii',
@@ -145,11 +145,11 @@ const channels = [
   },
   {
     channelName: 'lsj74',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: '6gbths',
-    channelType: 'c'
+    channelType: 'g'
   },
   {
     channelName: 'z74q3',
@@ -161,7 +161,7 @@ const channels = [
   },
   {
     channelName: '87bdwk',
-    channelType: 'c'
+    channelType: 'g'
   }
 ]
 

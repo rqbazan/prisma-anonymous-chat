@@ -20,8 +20,10 @@ const sendMessage: Resolver<Message> = async (
   async function getPrivateChat() {
     const [privateChat] = await prisma.privateChats({
       where: {
-        participateA: { id_in: [userId, receiverId] },
-        participateB: { id_in: [userId, receiverId] }
+        OR: [
+          { participateA: { id: userId }, participateB: { id: receiverId } },
+          { participateA: { id: receiverId }, participateB: { id: userId } }
+        ]
       },
       first: 1
     })
@@ -60,7 +62,7 @@ const sendMessage: Resolver<Message> = async (
       const privateChat = await getPrivateChat()
 
       const [chat] = await prisma.chats({
-        where: { private: { id: privateChat.id } },
+        where: { id: privateChat.id },
         first: 1
       })
 
@@ -69,14 +71,15 @@ const sendMessage: Resolver<Message> = async (
       }
 
       return prisma.createChat({
-        private: { connect: { id: privateChat.id } }
+        id: privateChat.id,
+        type: 'PRIVATE'
       })
     }
 
     const groupChat = await getGroupChat()
 
     const [chat] = await prisma.chats({
-      where: { group: { id: groupChat.id } },
+      where: { id: groupChat.id },
       first: 1
     })
 
@@ -85,7 +88,8 @@ const sendMessage: Resolver<Message> = async (
     }
 
     return prisma.createChat({
-      group: { connect: { id: groupChat.id } }
+      id: groupChat.id,
+      type: 'GROUP'
     })
   }
 

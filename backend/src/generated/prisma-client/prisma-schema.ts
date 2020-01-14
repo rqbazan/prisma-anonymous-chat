@@ -173,8 +173,7 @@ export const typeDefs = /* GraphQL */ `
 
   type Chat {
     id: ID!
-    private: PrivateChat
-    group: GroupChat
+    type: ChatType
   }
 
   type ChatConnection {
@@ -185,8 +184,7 @@ export const typeDefs = /* GraphQL */ `
 
   input ChatCreateInput {
     id: ID
-    private: PrivateChatCreateOneInput
-    group: GroupChatCreateOneInput
+    type: ChatType
   }
 
   input ChatCreateOneInput {
@@ -202,10 +200,13 @@ export const typeDefs = /* GraphQL */ `
   enum ChatOrderByInput {
     id_ASC
     id_DESC
+    type_ASC
+    type_DESC
   }
 
   type ChatPreviousValues {
     id: ID!
+    type: ChatType
   }
 
   type ChatSubscriptionPayload {
@@ -226,14 +227,21 @@ export const typeDefs = /* GraphQL */ `
     NOT: [ChatSubscriptionWhereInput!]
   }
 
+  enum ChatType {
+    PRIVATE
+    GROUP
+  }
+
   input ChatUpdateDataInput {
-    private: PrivateChatUpdateOneInput
-    group: GroupChatUpdateOneInput
+    type: ChatType
   }
 
   input ChatUpdateInput {
-    private: PrivateChatUpdateOneInput
-    group: GroupChatUpdateOneInput
+    type: ChatType
+  }
+
+  input ChatUpdateManyMutationInput {
+    type: ChatType
   }
 
   input ChatUpdateOneRequiredInput {
@@ -263,8 +271,10 @@ export const typeDefs = /* GraphQL */ `
     id_not_starts_with: ID
     id_ends_with: ID
     id_not_ends_with: ID
-    private: PrivateChatWhereInput
-    group: GroupChatWhereInput
+    type: ChatType
+    type_not: ChatType
+    type_in: [ChatType!]
+    type_not_in: [ChatType!]
     AND: [ChatWhereInput!]
     OR: [ChatWhereInput!]
     NOT: [ChatWhereInput!]
@@ -313,11 +323,6 @@ export const typeDefs = /* GraphQL */ `
     messages: MessageCreateManyInput
   }
 
-  input GroupChatCreateOneInput {
-    create: GroupChatCreateInput
-    connect: GroupChatWhereUniqueInput
-  }
-
   type GroupChatEdge {
     node: GroupChat!
     cursor: String!
@@ -353,30 +358,10 @@ export const typeDefs = /* GraphQL */ `
     NOT: [GroupChatSubscriptionWhereInput!]
   }
 
-  input GroupChatUpdateDataInput {
-    category: CategoryUpdateOneRequiredInput
-    participates: UserUpdateManyInput
-    messages: MessageUpdateManyInput
-  }
-
   input GroupChatUpdateInput {
     category: CategoryUpdateOneRequiredInput
     participates: UserUpdateManyInput
     messages: MessageUpdateManyInput
-  }
-
-  input GroupChatUpdateOneInput {
-    create: GroupChatCreateInput
-    update: GroupChatUpdateDataInput
-    upsert: GroupChatUpsertNestedInput
-    delete: Boolean
-    disconnect: Boolean
-    connect: GroupChatWhereUniqueInput
-  }
-
-  input GroupChatUpsertNestedInput {
-    update: GroupChatUpdateDataInput!
-    create: GroupChatCreateInput!
   }
 
   input GroupChatWhereInput {
@@ -641,6 +626,10 @@ export const typeDefs = /* GraphQL */ `
     deleteManyCategories(where: CategoryWhereInput): BatchPayload!
     createChat(data: ChatCreateInput!): Chat!
     updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+    updateManyChats(
+      data: ChatUpdateManyMutationInput!
+      where: ChatWhereInput
+    ): BatchPayload!
     upsertChat(
       where: ChatWhereUniqueInput!
       create: ChatCreateInput!
@@ -749,11 +738,6 @@ export const typeDefs = /* GraphQL */ `
     messages: MessageCreateManyInput
   }
 
-  input PrivateChatCreateOneInput {
-    create: PrivateChatCreateInput
-    connect: PrivateChatWhereUniqueInput
-  }
-
   type PrivateChatEdge {
     node: PrivateChat!
     cursor: String!
@@ -789,30 +773,10 @@ export const typeDefs = /* GraphQL */ `
     NOT: [PrivateChatSubscriptionWhereInput!]
   }
 
-  input PrivateChatUpdateDataInput {
-    participateA: UserUpdateOneRequiredInput
-    participateB: UserUpdateOneRequiredInput
-    messages: MessageUpdateManyInput
-  }
-
   input PrivateChatUpdateInput {
     participateA: UserUpdateOneRequiredInput
     participateB: UserUpdateOneRequiredInput
     messages: MessageUpdateManyInput
-  }
-
-  input PrivateChatUpdateOneInput {
-    create: PrivateChatCreateInput
-    update: PrivateChatUpdateDataInput
-    upsert: PrivateChatUpsertNestedInput
-    delete: Boolean
-    disconnect: Boolean
-    connect: PrivateChatWhereUniqueInput
-  }
-
-  input PrivateChatUpsertNestedInput {
-    update: PrivateChatUpdateDataInput!
-    create: PrivateChatCreateInput!
   }
 
   input PrivateChatWhereInput {

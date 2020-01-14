@@ -1,13 +1,23 @@
-import { UserNullablePromise, Category, User } from '@prisma'
-import { Resolver } from '~/types'
+import {
+  UserNullablePromise,
+  Category,
+  User,
+  PrivateChat,
+  GroupChat
+} from '@prisma'
+import { Resolver, Channel } from '~/types'
 
 const whoami: Resolver<UserNullablePromise> = (_, { userId }, { prisma }) => {
   return prisma.user({ id: userId })
 }
 
-const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
-  function normalize(type: 'p' | 'g') {
-    return (obj: Category | User) => ({ ...obj, type })
+const search: Resolver<Channel[]> = async (
+  _,
+  { displayNameLike },
+  { prisma }
+) => {
+  function channelMapper(type: 'p' | 'g') {
+    return (obj: Category | User): Channel => ({ ...obj, type })
   }
 
   if (displayNameLike.startsWith('#')) {
@@ -17,7 +27,7 @@ const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
       first: 10
     })
 
-    return categories.map(normalize('g'))
+    return categories.map(channelMapper('g'))
   }
 
   const [users, categories] = await Promise.all([
@@ -33,10 +43,42 @@ const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
     })
   ])
 
-  return [...users.map(normalize('p')), ...categories.map(normalize('g'))]
+  return [
+    ...users.map(channelMapper('p')),
+    ...categories.map(channelMapper('g'))
+  ]
+}
+
+const chats: Resolver<(PrivateChat | GroupChat)[]> = async (
+  _,
+  __,
+  { userId, prisma }
+) => {
+  const [privateChats, groupChats] = await Promise.all([
+    prisma.privateChats({
+      where: {
+        // prettier-ignore
+        OR: [
+          { participateA: { id: userId } }, 
+          { participateB: { id: userId } }
+        ]
+      }
+    }),
+    prisma.groupChats({
+      where: {
+        participates_some: { id: userId }
+      }
+    })
+  ])
+
+  return [
+    ...privateChats.map(chat => ({ ...chat, private: true })),
+    ...groupChats.map(chat => ({ ...chat, private: false }))
+  ]
 }
 
 export default {
   whoami,
-  search
+  search,
+  chats
 }
