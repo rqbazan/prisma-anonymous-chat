@@ -1,20 +1,27 @@
 import getSessionId from '~/utils/get-session-id'
+import getDisplayName, { channelTypes } from '~/utils/get-channel-display-name'
 
 const PrivateChatResolver = {
   displayName: (privateChat, __, { cache }) => {
     const sessionId = getSessionId(cache)
 
+    let nickname
+
     if (privateChat.participateA.id === sessionId) {
-      return privateChat.participateB.nickname
+      nickname = privateChat.participateB.nickname
+    } else {
+      nickname = privateChat.participateA.nickname
     }
 
-    return privateChat.participateA.nickname
+    return getDisplayName(nickname, channelTypes.PRIVATE)
   }
 }
 
 const GroupChatResolver = {
   channelName: groupChat => groupChat.category.name,
-  displayName: groupChat => `#${groupChat.category.name}`
+  displayName: ({ category: { name } }) => {
+    return getDisplayName(name, channelTypes.PRIVATE)
+  }
 }
 
 export default {
