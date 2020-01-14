@@ -28,11 +28,23 @@ const ChatResolver = {
   __resolveType: (obj: WellKnowChat) => {
     return isPrivateChat(obj) ? 'PrivateChat' : 'GroupChat'
   },
+  channelType: (obj: WellKnowChat) => {
+    return isPrivateChat(obj) ? ChannelType.PRIVATE : ChannelType.GROUP
+  },
   messages: ({ id }, _, { prisma }: Context) => {
     return prisma.messages({
       where: { chat: { id } },
       orderBy: 'createdAt_ASC'
     })
+  },
+  lastMessage: async ({ id }, _, { prisma }: Context) => {
+    const [message] = await prisma.messages({
+      where: { chat: { id } },
+      orderBy: 'createdAt_DESC',
+      first: 1
+    })
+
+    return message
   }
 }
 

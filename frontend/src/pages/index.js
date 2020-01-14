@@ -7,7 +7,7 @@ import UnselectedChat from '~/components/unselected-chat'
 import UserSection from '~/widgets/user-section'
 import Chat from '~/widgets/chat'
 import Search from '~/widgets/search'
-import whoamiQuery from '~/graphql/whoami'
+import whoamiQuery from '~/graphql/queries/whoami'
 
 function IndexPage({ channelName, userId }) {
   const { data, loading } = useQuery(whoamiQuery, { variables: { userId } })

@@ -5,8 +5,8 @@ import { useApolloClient } from '@apollo/react-hooks'
 import SearchBar from '~/components/search-bar'
 import ChannelPreview from '~/components/channel-preview'
 import Loader from '~/components/loader'
-import searchQuery from '~/graphql/search'
-import Chats from './chats'
+import searchQuery from '~/graphql/queries/search'
+import Chats from '../chats'
 
 function SearchLoader() {
   return (

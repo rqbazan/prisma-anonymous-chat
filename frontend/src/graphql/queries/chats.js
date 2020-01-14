@@ -4,6 +4,13 @@ export default gql`
   query chats {
     chats {
       id
+      channelType
+      lastMessage {
+        id
+        content
+      }
+      displayName @client
+      channelName @client
       ... on PrivateChat {
         participateA {
           id

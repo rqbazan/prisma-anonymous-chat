@@ -28,12 +28,14 @@ type Message {
 
 interface Chat {
   id: ID!
+  channelType: ChannelType!
   lastMessage: Message!
   messages: [Message]
 }
 
 type PrivateChat implements Chat {
   id: ID!
+  channelType: ChannelType!
   lastMessage: Message!
   messages: [Message]
   participateA: User!
@@ -42,6 +44,7 @@ type PrivateChat implements Chat {
 
 type GroupChat implements Chat {
   id: ID!
+  channelType: ChannelType!
   lastMessage: Message!
   messages: [Message]
   category: Category!

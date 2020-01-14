@@ -10,6 +10,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { ApolloLink } from 'apollo-link'
 import fetch from 'isomorphic-unfetch'
+import resolvers from '~/graphql/resolvers'
 import introspectionQueryResultData from '../generated/fragmentTypes'
 import getNonSecretId from '../utils/get-non-secret-id'
 
@@ -40,11 +41,23 @@ function createApolloClient(initialState = {}, ctx) {
     introspectionQueryResultData
   })
 
-  return new ApolloClient({
+  const cache = new InMemoryCache({ fragmentMatcher }).restore(initialState)
+
+  const apolloClient = new ApolloClient({
+    resolvers,
+    cache,
     ssrMode: typeof window === 'undefined',
-    link: ApolloLink.from([authLink, httpLink]),
-    cache: new InMemoryCache({ fragmentMatcher }).restore(initialState)
+    link: ApolloLink.from([authLink, httpLink])
   })
+
+  // make sessionId available for local resolvers
+  cache.writeData({
+    data: {
+      sessionId: getNonSecretId(ctx)
+    }
+  })
+
+  return apolloClient
 }
 
 function initApolloClient(initialState, ctx) {
@@ -60,8 +73,8 @@ function initApolloClient(initialState, ctx) {
 }
 
 export default function withApollo(PageComponent, { ssr = true } = {}) {
-  const WithApollo = ({ apolloClient, apolloState, ...pageProps }) => {
-    const client = apolloClient || initApolloClient(apolloState)
+  const WithApollo = ({ apolloClient, apolloState, ctx, ...pageProps }) => {
+    const client = apolloClient || initApolloClient(apolloState, ctx)
     return (
       <ApolloProvider client={client}>
         <PageComponent {...pageProps} />
@@ -134,7 +147,12 @@ export default function withApollo(PageComponent, { ssr = true } = {}) {
 
       return {
         ...pageProps,
-        apolloState
+        apolloState,
+        ctx: {
+          req: {
+            sessionId: getNonSecretId(ctx)
+          }
+        }
       }
     }
   }
