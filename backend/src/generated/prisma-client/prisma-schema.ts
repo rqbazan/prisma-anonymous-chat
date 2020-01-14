@@ -33,7 +33,6 @@ export const typeDefs = /* GraphQL */ `
 
   type Category {
     id: ID!
-    slug: String!
     name: String!
   }
 
@@ -45,7 +44,6 @@ export const typeDefs = /* GraphQL */ `
 
   input CategoryCreateInput {
     id: ID
-    slug: String!
     name: String!
   }
 
@@ -62,15 +60,12 @@ export const typeDefs = /* GraphQL */ `
   enum CategoryOrderByInput {
     id_ASC
     id_DESC
-    slug_ASC
-    slug_DESC
     name_ASC
     name_DESC
   }
 
   type CategoryPreviousValues {
     id: ID!
-    slug: String!
     name: String!
   }
 
@@ -93,17 +88,14 @@ export const typeDefs = /* GraphQL */ `
   }
 
   input CategoryUpdateDataInput {
-    slug: String
     name: String
   }
 
   input CategoryUpdateInput {
-    slug: String
     name: String
   }
 
   input CategoryUpdateManyMutationInput {
-    slug: String
     name: String
   }
 
@@ -134,20 +126,6 @@ export const typeDefs = /* GraphQL */ `
     id_not_starts_with: ID
     id_ends_with: ID
     id_not_ends_with: ID
-    slug: String
-    slug_not: String
-    slug_in: [String!]
-    slug_not_in: [String!]
-    slug_lt: String
-    slug_lte: String
-    slug_gt: String
-    slug_gte: String
-    slug_contains: String
-    slug_not_contains: String
-    slug_starts_with: String
-    slug_not_starts_with: String
-    slug_ends_with: String
-    slug_not_ends_with: String
     name: String
     name_not: String
     name_in: [String!]
@@ -169,6 +147,7 @@ export const typeDefs = /* GraphQL */ `
 
   input CategoryWhereUniqueInput {
     id: ID
+    name: String
   }
 
   type Chat {

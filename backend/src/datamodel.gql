@@ -14,8 +14,7 @@ type Message {
 
 type Category {
   id: ID! @id
-  slug: String!
-  name: String!
+  name: String! @unique
 }
 # } Basic Types
 

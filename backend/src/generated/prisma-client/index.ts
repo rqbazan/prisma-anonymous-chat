@@ -293,8 +293,6 @@ export interface ClientConstructor<T> {
 export type CategoryOrderByInput =
   | 'id_ASC'
   | 'id_DESC'
-  | 'slug_ASC'
-  | 'slug_DESC'
   | 'name_ASC'
   | 'name_DESC'
 
@@ -332,6 +330,7 @@ export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED'
 
 export type CategoryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>
+  name?: Maybe<String>
 }>
 
 export interface CategoryWhereInput {
@@ -349,20 +348,6 @@ export interface CategoryWhereInput {
   id_not_starts_with?: Maybe<ID_Input>
   id_ends_with?: Maybe<ID_Input>
   id_not_ends_with?: Maybe<ID_Input>
-  slug?: Maybe<String>
-  slug_not?: Maybe<String>
-  slug_in?: Maybe<String[] | String>
-  slug_not_in?: Maybe<String[] | String>
-  slug_lt?: Maybe<String>
-  slug_lte?: Maybe<String>
-  slug_gt?: Maybe<String>
-  slug_gte?: Maybe<String>
-  slug_contains?: Maybe<String>
-  slug_not_contains?: Maybe<String>
-  slug_starts_with?: Maybe<String>
-  slug_not_starts_with?: Maybe<String>
-  slug_ends_with?: Maybe<String>
-  slug_not_ends_with?: Maybe<String>
   name?: Maybe<String>
   name_not?: Maybe<String>
   name_in?: Maybe<String[] | String>
@@ -575,17 +560,14 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface CategoryCreateInput {
   id?: Maybe<ID_Input>
-  slug: String
   name: String
 }
 
 export interface CategoryUpdateInput {
-  slug?: Maybe<String>
   name?: Maybe<String>
 }
 
 export interface CategoryUpdateManyMutationInput {
-  slug?: Maybe<String>
   name?: Maybe<String>
 }
 
@@ -660,7 +642,6 @@ export interface CategoryUpdateOneRequiredInput {
 }
 
 export interface CategoryUpdateDataInput {
-  slug?: Maybe<String>
   name?: Maybe<String>
 }
 
@@ -979,13 +960,11 @@ export interface NodeNode {
 
 export interface Category {
   id: ID_Output
-  slug: String
   name: String
 }
 
 export interface CategoryPromise extends Promise<Category>, Fragmentable {
   id: () => Promise<ID_Output>
-  slug: () => Promise<String>
   name: () => Promise<String>
 }
 
@@ -993,7 +972,6 @@ export interface CategorySubscription
   extends Promise<AsyncIterator<Category>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>
-  slug: () => Promise<AsyncIterator<String>>
   name: () => Promise<AsyncIterator<String>>
 }
 
@@ -1001,7 +979,6 @@ export interface CategoryNullablePromise
   extends Promise<Category | null>,
     Fragmentable {
   id: () => Promise<ID_Output>
-  slug: () => Promise<String>
   name: () => Promise<String>
 }
 
@@ -1621,7 +1598,6 @@ export interface CategorySubscriptionPayloadSubscription
 
 export interface CategoryPreviousValues {
   id: ID_Output
-  slug: String
   name: String
 }
 
@@ -1629,7 +1605,6 @@ export interface CategoryPreviousValuesPromise
   extends Promise<CategoryPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>
-  slug: () => Promise<String>
   name: () => Promise<String>
 }
 
@@ -1637,7 +1612,6 @@ export interface CategoryPreviousValuesSubscription
   extends Promise<AsyncIterator<CategoryPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>
-  slug: () => Promise<AsyncIterator<String>>
   name: () => Promise<AsyncIterator<String>>
 }
 

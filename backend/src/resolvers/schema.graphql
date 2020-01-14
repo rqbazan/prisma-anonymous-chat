@@ -61,8 +61,8 @@ type Query {
 type Mutation {
   sendMessage(
     content: String!
-    receiverId: ID!
-    channelType: ChannelType
+    channelName: String!
+    channelType: ChannelType!
   ): Message!
   updateUser(nickname: String!): User!
   hideMessage(messageId: ID!): Message!

@@ -14,15 +14,21 @@ const updateUser: Resolver<UserNullablePromise> = (
 
 const sendMessage: Resolver<Message> = async (
   _,
-  { content, receiverId, channelType },
+  { content, channelName, channelType },
   { userId, prisma }
 ) => {
   async function getPrivateChat() {
     const [privateChat] = await prisma.privateChats({
       where: {
         OR: [
-          { participateA: { id: userId }, participateB: { id: receiverId } },
-          { participateA: { id: receiverId }, participateB: { id: userId } }
+          {
+            participateA: { id: userId },
+            participateB: { nickname: channelName }
+          },
+          {
+            participateA: { nickname: channelName },
+            participateB: { id: userId }
+          }
         ]
       },
       first: 1
@@ -34,14 +40,14 @@ const sendMessage: Resolver<Message> = async (
 
     return prisma.createPrivateChat({
       participateA: { connect: { id: userId } },
-      participateB: { connect: { id: receiverId } }
+      participateB: { connect: { nickname: channelName } }
     })
   }
 
   async function getGroupChat() {
     const [groupChat] = await prisma.groupChats({
       where: {
-        category: { id: receiverId },
+        category: { name: channelName },
         participates_some: { id: userId }
       },
       first: 1
@@ -52,7 +58,7 @@ const sendMessage: Resolver<Message> = async (
     }
 
     return prisma.createGroupChat({
-      category: { connect: { id: receiverId } },
+      category: { connect: { name: channelName } },
       participates: { connect: { id: userId } }
     })
   }
