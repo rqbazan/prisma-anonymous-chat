@@ -81,16 +81,51 @@ const chats: Resolver<WellKnowChat[]> = async (_, __, { userId, prisma }) => {
 }
 
 const getChat: Resolver<
-  WellKnowChat,
+  WellKnowChat | null,
   {},
-  { chatId: string; channelType: ChannelType }
-> = async (_, { chatId, channelType }, { prisma }) => {
+  { channelName: string; channelType: ChannelType }
+> = async (_, { channelName, channelType }, { userId, prisma }) => {
   let chat
 
+  async function getPrivateChat() {
+    const [privateChat] = await prisma.privateChats({
+      where: {
+        OR: [
+          {
+            participateA: { nickname: channelName },
+            participateB: { id: userId }
+          },
+          {
+            participateB: { nickname: channelName },
+            participateA: { id: userId }
+          }
+        ]
+      },
+      first: 1
+    })
+
+    return privateChat
+  }
+
+  async function getGroupChat() {
+    const [groupChat] = await prisma.groupChats({
+      where: {
+        category: { name: channelName }
+      },
+      first: 1
+    })
+
+    return groupChat
+  }
+
   if (channelType === ChannelType.PRIVATE) {
-    chat = await prisma.privateChat({ id: chatId })
+    chat = await getPrivateChat()
   } else {
-    chat = await prisma.groupChat({ id: chatId })
+    chat = await getGroupChat()
+  }
+
+  if (!chat) {
+    return null
   }
 
   return toWellKnowChat(chat, channelType)
