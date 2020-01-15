@@ -47,13 +47,17 @@ const sendMessage: Resolver<Message> = async (
   async function getGroupChat() {
     const [groupChat] = await prisma.groupChats({
       where: {
-        category: { name: channelName },
-        participates_some: { id: userId }
+        category: { name: channelName }
       },
       first: 1
     })
 
     if (groupChat) {
+      await prisma.updateGroupChat({
+        where: { id: groupChat.id },
+        data: { participates: { connect: { id: userId } } }
+      })
+
       return groupChat
     }
 
