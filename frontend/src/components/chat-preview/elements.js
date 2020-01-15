@@ -6,7 +6,7 @@ const hoveredStyle = css`
 
 export const Container = styled.box.attrs({ role: 'button' })`
   display: flex;
-  padding: 2;
+  padding: 2 3;
 
   ${props => props.selected && hoveredStyle}
 
