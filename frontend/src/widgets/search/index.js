@@ -1,11 +1,11 @@
 import React from 'react'
-import Router from 'next/router'
 import { Box } from '@xstyled/styled-components'
 import { useApolloClient } from '@apollo/react-hooks'
 import SearchBar from '~/components/search-bar'
 import ChannelPreview from '~/components/channel-preview'
 import Loader from '~/components/loader'
 import searchQuery from '~/graphql/queries/search'
+import goToChannel from '~/utils/go-to-channel'
 import Chats from '../chats'
 
 function SearchLoader() {
@@ -24,7 +24,7 @@ const initialState = {
   term: ''
 }
 
-export default function Search({ user }) {
+export default function Search() {
   const apolloClient = useApolloClient()
 
   const [state, setState] = React.useReducer(
@@ -71,28 +71,19 @@ export default function Search({ user }) {
     }
 
     return state.channels.map(channel => {
-      const goToChannel = () => {
-        Router.push(
-          {
-            pathname: '/',
-            query: {
-              channelType: channel.type,
-              channelName: channel.name,
-              userId: user.id
-            }
-          },
-          `/${user.id}/${channel.type}/${channel.name}`
-        )
+      function onNavigate() {
+        goToChannel(channel.type, channel.name)
         setState(initialState)
       }
 
       return (
         <ChannelPreview
+          key={channel.id}
           data-is-channel-preview
           tabIndex="0"
           channel={channel}
-          onClick={goToChannel}
-          onKeyPress={goToChannel}
+          onClick={onNavigate}
+          onKeyPress={onNavigate}
         />
       )
     })

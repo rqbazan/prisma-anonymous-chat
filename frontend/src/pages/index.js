@@ -30,7 +30,7 @@ function IndexPage({ channelName, userId }) {
         zIndex="1"
       >
         <UserSection user={user} />
-        <Search user={user} />
+        <Search />
       </Box>
       <Box
         display={{

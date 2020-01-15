@@ -24,6 +24,8 @@ export default function UpdateUserInfoModal({ user, controller }) {
       error.graphQLErrors?.map(({ message }) => {
         if (message.includes('unique constraint')) {
           setError('nickname', 'unique', 'The nickname is already taken')
+        } else {
+          setError('nickname', 'unknown', 'Ooop! something was wrong')
         }
       })
     }

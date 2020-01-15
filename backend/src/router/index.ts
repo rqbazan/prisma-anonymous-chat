@@ -13,40 +13,35 @@ export default (nextServer: ReturnType<typeof createNextServer>) => {
     })
   }
 
-  appRouter.get('/', async (_, res) => {
-    const newUser = await createUser(prisma)
-    res.redirect(`/${newUser.id}`)
-  })
-
   appRouter.get('/api/prisma', async (_, res) => {
     res.redirect(process.env.PRISMA_URL!)
   })
 
-  appRouter.get(
-    '/:userId/:channelType?/:channelName?',
-    async (req, res, forward) => {
-      if (req.url.startsWith('/_next') || req.url.startsWith('/api')) {
-        return forward()
-      }
+  appRouter.get('/', async (_, res) => {
+    const newUser = await createUser(prisma)
+    res.redirect(`/u/${newUser.id}`)
+  })
 
-      const { userId } = req.params
+  appRouter.get('/u/:id/:type?/:name?', async (req, res) => {
+    const {
+      params: { id: userId, type: channelType, name: channelName }
+    } = req
 
-      if (req.params.channelType && !req.params.channelName) {
-        return res.redirect(`/${userId}`)
-      }
-
-      const user = await getUser(prisma, userId)
-
-      // @ts-ignore
-      req.sessionId = user.id
-
-      return nextServer.render(req, res, '/', {
-        userId: user.id,
-        channelType: req.params.channelType,
-        channelName: req.params.channelName
-      })
+    if (channelType && !channelName) {
+      return res.redirect(`/u/${userId}`)
     }
-  )
+
+    const user = await getUser(prisma, userId)
+
+    // @ts-ignore
+    req.sessionId = user.id
+
+    return nextServer.render(req, res, '/', {
+      channelType,
+      channelName,
+      userId: user.id
+    })
+  })
 
   appRouter.use((req, res, forward) => {
     if (req.url.startsWith('/api')) {
