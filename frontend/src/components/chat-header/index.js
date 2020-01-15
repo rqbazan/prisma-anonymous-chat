@@ -4,7 +4,7 @@ import { Box } from '@xstyled/styled-components'
 import Avatar from '../avatar'
 import Icon from '../icon'
 
-export default function ChatHeader({ chat }) {
+export default function ChatHeader({ displayName }) {
   return (
     <Box
       display="flex"
@@ -22,9 +22,9 @@ export default function ChatHeader({ chat }) {
       >
         <Icon name="back" />
       </Box>
-      <Avatar nickname={chat.displayName} variant="small" />
+      <Avatar nickname={displayName} variant="small" />
       <Box ml="2" fontSize="3" alignSelf="center" fontWeight="500">
-        {chat.displayName}
+        {displayName}
       </Box>
     </Box>
   )

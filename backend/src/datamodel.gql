@@ -9,16 +9,26 @@ type Message {
   content: String!
   createdAt: DateTime! @createdAt
   author: User!
+  chat: Chat!
 }
 
 type Category {
   id: ID! @id
-  slug: String!
-  name: String!
+  name: String! @unique
 }
 # } Basic Types
 
 # { Relational Types
+enum ChatType {
+  PRIVATE
+  GROUP
+}
+
+type Chat {
+  id: ID! @id
+  type: ChatType
+}
+
 type PrivateChat {
   id: ID! @id
   participateA: User! @relation(name: "ParticipateA")

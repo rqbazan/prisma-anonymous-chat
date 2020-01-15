@@ -1,15 +1,6 @@
 enum ChannelType {
   p
-  c
-}
-
-interface Node {
-  id: ID!
-}
-
-interface Chat {
-  id: ID!
-  lastMessage: Message!
+  g
 }
 
 type Channel {
@@ -19,14 +10,13 @@ type Channel {
   type: ChannelType!
 }
 
-type User implements Node {
+type User {
   id: ID!
   nickname: String!
 }
 
-type Category implements Node {
+type Category {
   id: ID!
-  slug: String!
   name: String!
 }
 
@@ -36,17 +26,28 @@ type Message {
   author: User!
 }
 
-type PrivateChat implements Chat {
+interface Chat {
   id: ID!
+  channelType: ChannelType!
   lastMessage: Message!
   messages: [Message]
-  messenger: User
+}
+
+type PrivateChat implements Chat {
+  id: ID!
+  channelType: ChannelType!
+  lastMessage: Message!
+  messages: [Message]
+  participateA: User!
+  participateB: User!
 }
 
 type GroupChat implements Chat {
   id: ID!
+  channelType: ChannelType!
   lastMessage: Message!
   messages: [Message]
+  category: Category!
   participates: [User]
 }
 
@@ -54,12 +55,15 @@ type Query {
   whoami(userId: ID!): User!
   search(displayNameLike: String!): [Channel]
   chats: [Chat]
-  getChat(chatId: ID!): Chat
+  getChat(channelName: String!, channelType: ChannelType!): Chat
 }
 
 type Mutation {
-  sendPrivateMessage(receiverId: ID!): Message!
-  sendGroupMessage(categoryId: ID!): Message!
+  sendMessage(
+    content: String!
+    channelName: String!
+    channelType: ChannelType!
+  ): Message!
   updateUser(nickname: String!): User!
   hideMessage(messageId: ID!): Message!
 }

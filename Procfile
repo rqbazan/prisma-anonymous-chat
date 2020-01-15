@@ -1,2 +1,2 @@
-release: npx prisma deploy -p=./backend/prisma.yml
+release: ./scripts/heroku-release.sh
 web: yarn start

@@ -1,62 +1,60 @@
 import React from 'react'
+import { Box } from '@xstyled/styled-components'
 import { useRouter } from 'next/router'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import getChatQuery from '~/graphql/queries/get-chat'
+import sendMessageMutation from '~/graphql/mutations/send-message'
 import ChatHeader from '~/components/chat-header'
 import ChatInput from '~/components/chat-input'
 import ChatThread from '~/components/chat-thread'
+import Loader from '~/components/loader'
+import getDisplayName from '~/utils/get-channel-display-name'
 
-const chats = {
-  ricardo: {
-    isPrivate: true,
-    displayName: 'ricardo',
-    messenger: { nickname: 'ricardo' },
-    lastMessage: { content: 'hello there my friend' },
-    messages: Array.from({ length: 50 }).map((_, i) => ({
-      content: 'hello there my friend',
-      author: {
-        nickname: 'sxntixgo'
-      },
-      id: `msg-${i}`
-    }))
-  },
-  reactjs: {
-    isPrivate: false,
-    displayName: '#reactjs',
-    category: { name: 'reactjs' },
-    lastMessage: { content: 'hello there my friend' },
-    messages: Array.from({ length: 50 }).map((_, i) => ({
-      content: 'hello there my friend',
-      author: {
-        nickname: 'sxntixgo'
-      },
-      id: `msg-${i}`
-    }))
-  }
-}
-
-function getMockChat({ channelName, channelType }) {
-  const isPrivate = channelType === 'p'
-
-  const chat = isPrivate ? chats.ricardo : chats.reactjs
-
-  if (isPrivate) {
-    chat.displayName = channelName
-  } else {
-    chat.displayName = `#${channelName}`
-  }
-
-  return chat
+function ChatLoader() {
+  return (
+    <Box
+      display="flex"
+      flex="1"
+      overflow="auto"
+      minHeight="0px"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Loader dark size={32} />
+    </Box>
+  )
 }
 
 export default function Chat() {
-  const { query } = useRouter()
+  const {
+    query: { userId, channelName, channelType }
+  } = useRouter()
 
-  const chat = getMockChat(query)
+  const { data, loading } = useQuery(getChatQuery, {
+    variables: { channelName, channelType }
+  })
+
+  const [sendMessage] = useMutation(sendMessageMutation)
 
   return (
     <>
-      <ChatHeader chat={chat} />
-      <ChatThread messages={chat.messages} />
-      <ChatInput />
+      <ChatHeader displayName={getDisplayName(channelName, channelType)} />
+      {loading ? (
+        <ChatLoader />
+      ) : (
+        <ChatThread meId={userId} messages={data?.chat?.messages ?? []} />
+      )}
+      <ChatInput
+        onSend={content =>
+          sendMessage({
+            variables: {
+              content,
+              channelType,
+              channelName
+            }
+          })
+        }
+      />
     </>
   )
 }

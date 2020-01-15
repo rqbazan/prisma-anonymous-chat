@@ -7,6 +7,10 @@ export const typeDefs = /* GraphQL */ `
     count: Int!
   }
 
+  type AggregateChat {
+    count: Int!
+  }
+
   type AggregateGroupChat {
     count: Int!
   }
@@ -29,7 +33,6 @@ export const typeDefs = /* GraphQL */ `
 
   type Category {
     id: ID!
-    slug: String!
     name: String!
   }
 
@@ -41,7 +44,6 @@ export const typeDefs = /* GraphQL */ `
 
   input CategoryCreateInput {
     id: ID
-    slug: String!
     name: String!
   }
 
@@ -58,15 +60,12 @@ export const typeDefs = /* GraphQL */ `
   enum CategoryOrderByInput {
     id_ASC
     id_DESC
-    slug_ASC
-    slug_DESC
     name_ASC
     name_DESC
   }
 
   type CategoryPreviousValues {
     id: ID!
-    slug: String!
     name: String!
   }
 
@@ -89,17 +88,14 @@ export const typeDefs = /* GraphQL */ `
   }
 
   input CategoryUpdateDataInput {
-    slug: String
     name: String
   }
 
   input CategoryUpdateInput {
-    slug: String
     name: String
   }
 
   input CategoryUpdateManyMutationInput {
-    slug: String
     name: String
   }
 
@@ -130,20 +126,6 @@ export const typeDefs = /* GraphQL */ `
     id_not_starts_with: ID
     id_ends_with: ID
     id_not_ends_with: ID
-    slug: String
-    slug_not: String
-    slug_in: [String!]
-    slug_not_in: [String!]
-    slug_lt: String
-    slug_lte: String
-    slug_gt: String
-    slug_gte: String
-    slug_contains: String
-    slug_not_contains: String
-    slug_starts_with: String
-    slug_not_starts_with: String
-    slug_ends_with: String
-    slug_not_ends_with: String
     name: String
     name_not: String
     name_in: [String!]
@@ -164,6 +146,120 @@ export const typeDefs = /* GraphQL */ `
   }
 
   input CategoryWhereUniqueInput {
+    id: ID
+    name: String
+  }
+
+  type Chat {
+    id: ID!
+    type: ChatType
+  }
+
+  type ChatConnection {
+    pageInfo: PageInfo!
+    edges: [ChatEdge]!
+    aggregate: AggregateChat!
+  }
+
+  input ChatCreateInput {
+    id: ID
+    type: ChatType
+  }
+
+  input ChatCreateOneInput {
+    create: ChatCreateInput
+    connect: ChatWhereUniqueInput
+  }
+
+  type ChatEdge {
+    node: Chat!
+    cursor: String!
+  }
+
+  enum ChatOrderByInput {
+    id_ASC
+    id_DESC
+    type_ASC
+    type_DESC
+  }
+
+  type ChatPreviousValues {
+    id: ID!
+    type: ChatType
+  }
+
+  type ChatSubscriptionPayload {
+    mutation: MutationType!
+    node: Chat
+    updatedFields: [String!]
+    previousValues: ChatPreviousValues
+  }
+
+  input ChatSubscriptionWhereInput {
+    mutation_in: [MutationType!]
+    updatedFields_contains: String
+    updatedFields_contains_every: [String!]
+    updatedFields_contains_some: [String!]
+    node: ChatWhereInput
+    AND: [ChatSubscriptionWhereInput!]
+    OR: [ChatSubscriptionWhereInput!]
+    NOT: [ChatSubscriptionWhereInput!]
+  }
+
+  enum ChatType {
+    PRIVATE
+    GROUP
+  }
+
+  input ChatUpdateDataInput {
+    type: ChatType
+  }
+
+  input ChatUpdateInput {
+    type: ChatType
+  }
+
+  input ChatUpdateManyMutationInput {
+    type: ChatType
+  }
+
+  input ChatUpdateOneRequiredInput {
+    create: ChatCreateInput
+    update: ChatUpdateDataInput
+    upsert: ChatUpsertNestedInput
+    connect: ChatWhereUniqueInput
+  }
+
+  input ChatUpsertNestedInput {
+    update: ChatUpdateDataInput!
+    create: ChatCreateInput!
+  }
+
+  input ChatWhereInput {
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    type: ChatType
+    type_not: ChatType
+    type_in: [ChatType!]
+    type_not_in: [ChatType!]
+    AND: [ChatWhereInput!]
+    OR: [ChatWhereInput!]
+    NOT: [ChatWhereInput!]
+  }
+
+  input ChatWhereUniqueInput {
     id: ID
   }
 
@@ -293,6 +389,7 @@ export const typeDefs = /* GraphQL */ `
     content: String!
     createdAt: DateTime!
     author: User!
+    chat: Chat!
   }
 
   type MessageConnection {
@@ -305,6 +402,7 @@ export const typeDefs = /* GraphQL */ `
     id: ID
     content: String!
     author: UserCreateOneInput!
+    chat: ChatCreateOneInput!
   }
 
   input MessageCreateManyInput {
@@ -395,11 +493,13 @@ export const typeDefs = /* GraphQL */ `
   input MessageUpdateDataInput {
     content: String
     author: UserUpdateOneRequiredInput
+    chat: ChatUpdateOneRequiredInput
   }
 
   input MessageUpdateInput {
     content: String
     author: UserUpdateOneRequiredInput
+    chat: ChatUpdateOneRequiredInput
   }
 
   input MessageUpdateManyDataInput {
@@ -476,6 +576,7 @@ export const typeDefs = /* GraphQL */ `
     createdAt_gt: DateTime
     createdAt_gte: DateTime
     author: UserWhereInput
+    chat: ChatWhereInput
     AND: [MessageWhereInput!]
     OR: [MessageWhereInput!]
     NOT: [MessageWhereInput!]
@@ -502,6 +603,19 @@ export const typeDefs = /* GraphQL */ `
     ): Category!
     deleteCategory(where: CategoryWhereUniqueInput!): Category
     deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+    createChat(data: ChatCreateInput!): Chat!
+    updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+    updateManyChats(
+      data: ChatUpdateManyMutationInput!
+      where: ChatWhereInput
+    ): BatchPayload!
+    upsertChat(
+      where: ChatWhereUniqueInput!
+      create: ChatCreateInput!
+      update: ChatUpdateInput!
+    ): Chat!
+    deleteChat(where: ChatWhereUniqueInput!): Chat
+    deleteManyChats(where: ChatWhereInput): BatchPayload!
     createGroupChat(data: GroupChatCreateInput!): GroupChat!
     updateGroupChat(
       data: GroupChatUpdateInput!
@@ -701,6 +815,25 @@ export const typeDefs = /* GraphQL */ `
       first: Int
       last: Int
     ): CategoryConnection!
+    chat(where: ChatWhereUniqueInput!): Chat
+    chats(
+      where: ChatWhereInput
+      orderBy: ChatOrderByInput
+      skip: Int
+      after: String
+      before: String
+      first: Int
+      last: Int
+    ): [Chat]!
+    chatsConnection(
+      where: ChatWhereInput
+      orderBy: ChatOrderByInput
+      skip: Int
+      after: String
+      before: String
+      first: Int
+      last: Int
+    ): ChatConnection!
     groupChat(where: GroupChatWhereUniqueInput!): GroupChat
     groupChats(
       where: GroupChatWhereInput
@@ -782,6 +915,7 @@ export const typeDefs = /* GraphQL */ `
 
   type Subscription {
     category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+    chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
     groupChat(
       where: GroupChatSubscriptionWhereInput
     ): GroupChatSubscriptionPayload

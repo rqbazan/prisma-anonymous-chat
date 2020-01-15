@@ -1,13 +1,30 @@
-import { UserNullablePromise, Category, User } from '@prisma'
-import { Resolver } from '~/types'
+import {
+  UserNullablePromise,
+  Category,
+  User,
+  PrivateChat,
+  GroupChat
+} from '@prisma'
+import { Resolver, Channel, ChannelType, WellKnowChat } from '~/types'
+
+function toWellKnowChat(
+  chat: PrivateChat | GroupChat,
+  channelType: ChannelType
+): WellKnowChat {
+  return { ...chat, channelType }
+}
 
 const whoami: Resolver<UserNullablePromise> = (_, { userId }, { prisma }) => {
   return prisma.user({ id: userId })
 }
 
-const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
-  function normalize(type: 'p' | 'c') {
-    return (obj: Category | User) => ({ ...obj, type })
+const search: Resolver<Channel[]> = async (
+  _,
+  { displayNameLike },
+  { prisma }
+) => {
+  function channelMapper(type: ChannelType) {
+    return (obj: Category | User): Channel => ({ ...obj, type })
   }
 
   if (displayNameLike.startsWith('#')) {
@@ -17,7 +34,7 @@ const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
       first: 10
     })
 
-    return categories.map(normalize('c'))
+    return categories.map(channelMapper(ChannelType.GROUP))
   }
 
   const [users, categories] = await Promise.all([
@@ -33,10 +50,90 @@ const search: Resolver<any[]> = async (_, { displayNameLike }, { prisma }) => {
     })
   ])
 
-  return [...users.map(normalize('p')), ...categories.map(normalize('c'))]
+  return [
+    ...users.map(channelMapper(ChannelType.PRIVATE)),
+    ...categories.map(channelMapper(ChannelType.GROUP))
+  ]
+}
+
+const chats: Resolver<WellKnowChat[]> = async (_, __, { userId, prisma }) => {
+  const [privateChats, groupChats] = await Promise.all([
+    prisma.privateChats({
+      where: {
+        // prettier-ignore
+        OR: [
+          { participateA: { id: userId } }, 
+          { participateB: { id: userId } }
+        ]
+      }
+    }),
+    prisma.groupChats({
+      where: {
+        participates_some: { id: userId }
+      }
+    })
+  ])
+
+  return [
+    ...privateChats.map(chat => toWellKnowChat(chat, ChannelType.PRIVATE)),
+    ...groupChats.map(chat => toWellKnowChat(chat, ChannelType.GROUP))
+  ]
+}
+
+const getChat: Resolver<
+  WellKnowChat | null,
+  {},
+  { channelName: string; channelType: ChannelType }
+> = async (_, { channelName, channelType }, { userId, prisma }) => {
+  let chat
+
+  async function getPrivateChat() {
+    const [privateChat] = await prisma.privateChats({
+      where: {
+        OR: [
+          {
+            participateA: { nickname: channelName },
+            participateB: { id: userId }
+          },
+          {
+            participateB: { nickname: channelName },
+            participateA: { id: userId }
+          }
+        ]
+      },
+      first: 1
+    })
+
+    return privateChat
+  }
+
+  async function getGroupChat() {
+    const [groupChat] = await prisma.groupChats({
+      where: {
+        category: { name: channelName }
+      },
+      first: 1
+    })
+
+    return groupChat
+  }
+
+  if (channelType === ChannelType.PRIVATE) {
+    chat = await getPrivateChat()
+  } else {
+    chat = await getGroupChat()
+  }
+
+  if (!chat) {
+    return null
+  }
+
+  return toWellKnowChat(chat, channelType)
 }
 
 export default {
   whoami,
-  search
+  search,
+  chats,
+  getChat
 }

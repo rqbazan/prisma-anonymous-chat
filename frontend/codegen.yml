@@ -1,0 +1,6 @@
+schema: ../backend/src/resolvers/schema.graphql
+overwrite: true
+generates:
+  ./src/generated/fragmentTypes.json:
+    plugins:
+      - fragment-matcher

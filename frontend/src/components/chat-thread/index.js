@@ -30,11 +30,15 @@ function Message({ content, author, isOneOfMine }) {
   )
 }
 
-export default function ChatThread({ messages }) {
+export default function ChatThread({ meId, messages }) {
   return (
     <Box flex="1" overflow="auto" minHeight="0px">
-      {messages.map((message, i) => (
-        <Message key={message.id} isOneOfMine={i % 2 === 0} {...message} />
+      {messages.map(message => (
+        <Message
+          key={message.id}
+          isOneOfMine={message.author.id === meId}
+          {...message}
+        />
       ))}
     </Box>
   )

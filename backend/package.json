@@ -8,7 +8,9 @@
     "node": "12.x"
   },
   "scripts": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "generate": "export $(cat ../.env | xargs) && prisma generate",
+    "prisma:deploy": "export $(cat ../.env | xargs) && prisma deploy"
   },
   "lint-staged": {
     "*.{ts,json}": [
