@@ -4,7 +4,7 @@ const hoveredStyle = css`
   background-color: gray.2;
 `
 
-export const Container = styled.box.attrs({ role: 'button' })`
+export const Container = styled.div.attrs({ role: 'button' })`
   display: flex;
   padding: 2 3;
 
@@ -24,15 +24,6 @@ export const Container = styled.box.attrs({ role: 'button' })`
   }
 `
 
-export const MessageContent = styled.span`
-  color: gray.7;
-  font-size: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-`
-
 export const MessengerNickName = styled.span`
   font-size: 1;
   font-weight: medium;
@@ -44,4 +35,5 @@ export const InfoContainer = styled.box`
   flex: 1;
   margin-left: 2;
   overflow: hidden;
+  justify-content: center;
 `

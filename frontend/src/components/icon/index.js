@@ -3,12 +3,14 @@ import Search from './search'
 import Config from './config'
 import Add from './add'
 import Back from './back'
+import Send from './send'
 
 const icons = {
   search: Search,
   config: Config,
   add: Add,
-  back: Back
+  back: Back,
+  send: Send
 }
 
 export default function Icon({ name, size = 32, ...props }) {
