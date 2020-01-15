@@ -20,7 +20,7 @@ const PrivateChatResolver = {
 const GroupChatResolver = {
   channelName: groupChat => groupChat.category.name,
   displayName: ({ category: { name } }) => {
-    return getDisplayName(name, channelTypes.PRIVATE)
+    return getDisplayName(name, channelTypes.GROUP)
   }
 }
 
