@@ -25,10 +25,7 @@ const GroupChatResolver = {
 }
 
 const MessageResolver = {
-  isOneOfMine: ({ author }, _, { cache }) => {
-    const sessionId = getSessionId(cache)
-    return author.id === sessionId
-  }
+  isOneOfMine: ({ author }, _, { cache }) => author.id === getSessionId(cache)
 }
 
 export default {

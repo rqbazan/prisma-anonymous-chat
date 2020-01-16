@@ -7,12 +7,15 @@ import sendMessageMutation from '~/graphql/mutations/send-message'
 import ChatHeader from '~/components/chat-header'
 import ChatInput from '~/components/chat-input'
 import ChatThread from '~/components/chat-thread'
-import getDisplayName from '~/utils/get-channel-display-name'
+import getDisplayName, { channelTypes } from '~/utils/get-channel-display-name'
+import getRandomOptimisticId from '~/utils/get-random-optimistic-id'
 
 export default function Chat({ user }) {
   const {
     query: { channelName, channelType }
   } = useRouter()
+
+  const displayName = getDisplayName(channelName, channelType)
 
   const { data, loading } = useQuery(getChatQuery, {
     variables: { channelName, channelType }
@@ -24,7 +27,7 @@ export default function Chat({ user }) {
     const optimisticResponse = {
       __typename: 'Mutation',
       sendMessage: {
-        id: Math.floor(Math.random() * 1000000000),
+        id: getRandomOptimisticId(),
         content,
         isOneOfMine: true,
         __typename: 'Message',
@@ -38,19 +41,71 @@ export default function Chat({ user }) {
     function update(cache, response) {
       const newMessage = response.data.sendMessage
 
+      function getNewChat(chat) {
+        if (chat) {
+          return {
+            ...chat,
+            messages: [...chat.messages, newMessage]
+          }
+        }
+
+        return {
+          displayName,
+          id: getRandomOptimisticId(),
+          messages: [newMessage],
+          __typename:
+            channelType === channelTypes.PRIVATE ? 'PrivateChat' : 'GroupChat',
+          ...(channelType !== channelTypes.PRIVATE
+            ? {
+                category: {
+                  __typename: 'Category',
+                  id: getRandomOptimisticId(),
+                  name: channelName
+                }
+              }
+            : {
+                participateA: {
+                  __typename: 'User',
+                  id: getRandomOptimisticId(),
+                  nickname: user.nickname
+                },
+                participateB: {
+                  __typename: 'User',
+                  id: getRandomOptimisticId(),
+                  nickname: channelName
+                }
+              })
+        }
+      }
+
+      function getNewChats(chats, newChat, chat) {
+        const chatIndex = chats.findIndex(({ id }) => id === chat?.id)
+        const found = chatIndex !== -1
+
+        return [
+          {
+            ...(found
+              ? chats[chatIndex]
+              : { ...newChat, channelType, channelName }),
+            lastMessage: newMessage
+          },
+          ...(found
+            ? [...chats.slice(0, chatIndex), ...chats.slice(chatIndex + 1)]
+            : chats)
+        ]
+      }
+
       try {
         const { chat } = cache.readQuery({
           query: getChatQuery,
           variables: { channelName, channelType }
         })
 
-        const newChat = {
-          ...chat,
-          messages: [...chat.messages, newMessage]
-        }
+        const newChat = getNewChat(chat)
 
         cache.writeQuery({
           query: getChatQuery,
+          variables: { channelName, channelType },
           data: { chat: newChat }
         })
 
@@ -58,13 +113,7 @@ export default function Chat({ user }) {
           query: chatsQuery
         })
 
-        const chatIndex = chats.findIndex(({ id }) => id === chat.id)
-
-        const newChats = [
-          { ...chats[chatIndex], lastMessage: newMessage },
-          ...chats.slice(0, chatIndex),
-          ...chats.slice(chatIndex + 1)
-        ]
+        const newChats = getNewChats(chats, newChat, chat)
 
         cache.writeQuery({
           query: chatsQuery,
@@ -84,7 +133,7 @@ export default function Chat({ user }) {
 
   return (
     <>
-      <ChatHeader displayName={getDisplayName(channelName, channelType)} />
+      <ChatHeader displayName={displayName} />
       <ChatThread loading={loading} messages={data?.chat?.messages ?? []} />
       <ChatInput onSend={onSendMessage} />
     </>
