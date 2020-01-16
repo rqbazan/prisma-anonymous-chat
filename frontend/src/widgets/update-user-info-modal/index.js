@@ -7,6 +7,10 @@ import updateUserMutation from '~/graphql/mutations/update-user'
 import FieldInput from '~/components/field-input'
 import Button from '~/components/button'
 
+function setUnknownError(fielName, setError) {
+  setError(fielName, 'unknown', 'Ooop! something was wrong')
+}
+
 export default function UpdateUserInfoModal({ user, controller }) {
   const [updateUser] = useMutation(updateUserMutation)
 
@@ -14,20 +18,25 @@ export default function UpdateUserInfoModal({ user, controller }) {
     defaultValues: user
   })
 
-  const onSubmit = async values => {
+  async function onSubmit(values) {
+    function setErrors({ message }) {
+      if (message.includes('unique constraint')) {
+        setError('nickname', 'unique', 'The nickname is already taken')
+      } else {
+        setUnknownError('nickname', setError)
+      }
+    }
+
     try {
       await updateUser({ variables: values })
       controller.close()
       notifier.success('Update successful 🎉')
     } catch (error) {
-      // eslint-disable-next-line
-      error.graphQLErrors?.map(({ message }) => {
-        if (message.includes('unique constraint')) {
-          setError('nickname', 'unique', 'The nickname is already taken')
-        } else {
-          setError('nickname', 'unknown', 'Ooop! something was wrong')
-        }
-      })
+      if (error.graphQLErrors?.length) {
+        error.graphQLErrors.forEach(setErrors)
+      } else {
+        setUnknownError('nickname', setError)
+      }
     }
   }
 
@@ -42,14 +51,16 @@ export default function UpdateUserInfoModal({ user, controller }) {
       </Box>
       <Box mt="3">
         <FieldInput
+          autoFocus
           name="nickname"
           label="Nickname"
           defaultValue={user.nickname}
-          autoFocus
           error={errors.nickname?.message}
           inputRef={register({
             required: { value: true, message: 'Enter your favorite nickname' },
-            validate: value => value !== user.nickname
+            validate: value => {
+              return value !== user.nickname || 'Enter a new nickname'
+            }
           })}
         />
       </Box>
