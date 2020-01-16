@@ -6,4 +6,13 @@ export default createGlobalStyle`
       outline: none;
     }
   }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  #__next {
+    height: inherit;
+  }
 `

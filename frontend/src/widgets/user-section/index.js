@@ -10,7 +10,7 @@ export default function UserSection({ user }) {
   const { controller } = useModal()
 
   return (
-    <Box display="flex" width="full" height="auto" p="3">
+    <Box display="flex" width="full" p="3">
       <Avatar nickname={user.nickname} />
       <Ellipsis mx="2" flex="1" fontSize="2">
         {user.nickname}

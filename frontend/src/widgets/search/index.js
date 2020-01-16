@@ -91,7 +91,7 @@ export default function Search() {
   }
 
   return (
-    <Box display="flex" flexDirection="column" flex="1" minHeight="0px">
+    <Box flex="1" minHeight="0px" overflow="auto">
       <Box p="3" pt="1">
         <SearchBar
           value={state.term}
@@ -107,9 +107,7 @@ export default function Search() {
           }}
         />
       </Box>
-      <Box flex="1" overflow="auto" minHeight="0px">
-        {renderContent()}
-      </Box>
+      {renderContent()}
     </Box>
   )
 }

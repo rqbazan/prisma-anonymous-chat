@@ -19,7 +19,7 @@ function IndexPage({ channelName, userId }) {
   const user = data.whoami
 
   return (
-    <Box display="flex" height="100vh">
+    <Box display="flex" height="full">
       <Box
         display={{ xs: channelName ? 'none' : 'flex', md: 'flex' }}
         flexDirection="column"
@@ -32,7 +32,7 @@ function IndexPage({ channelName, userId }) {
         <UserSection user={user} />
         <Search />
       </Box>
-      <Box
+      {/* <Box
         display={{
           xs: channelName ? 'flex' : 'none',
           md: 'flex'
@@ -41,7 +41,7 @@ function IndexPage({ channelName, userId }) {
         width={{ xs: '100%', md: '60%', lg: '70%', xl: '80%' }}
       >
         {!channelName ? <UnselectedChat /> : <Chat />}
-      </Box>
+      </Box> */}
     </Box>
   )
 }
