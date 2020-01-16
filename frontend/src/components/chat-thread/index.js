@@ -1,5 +1,7 @@
 import React from 'react'
 import { Box } from '@xstyled/styled-components'
+import CenterBox from '~/components/center-box'
+import Loader from '~/components/loader'
 import { MessageRow } from './elements'
 import Avatar from '../avatar'
 
@@ -27,16 +29,22 @@ function Message({ content, author, isOneOfMine }) {
   )
 }
 
-export default function ChatThread({ meId, messages }) {
+export default function ChatThread({ loading, meId, messages, ...props }) {
   return (
-    <Box flex="1" overflow="auto" minHeight="0px">
-      {messages.map(message => (
-        <Message
-          key={message.id}
-          isOneOfMine={message.author.id === meId}
-          {...message}
-        />
-      ))}
+    <Box flex="1" overflow="auto" minHeight="0px" {...props}>
+      {loading ? (
+        <CenterBox>
+          <Loader dark size={32} />
+        </CenterBox>
+      ) : (
+        messages.map(message => (
+          <Message
+            key={message.id}
+            isOneOfMine={message.author.id === meId}
+            {...message}
+          />
+        ))
+      )}
     </Box>
   )
 }

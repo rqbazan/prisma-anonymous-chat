@@ -58,7 +58,7 @@ export default function Search() {
 
     if (!state.channels.length) {
       return (
-        <CenterBox height="48">
+        <CenterBox innerHeight="48">
           <img
             src="https://res.cloudinary.com/dpwoyjb1f/image/upload/v1578875002/id-challenge/undraw_searching_p5ux_nw4hde.svg"
             alt="empty search"
@@ -91,7 +91,7 @@ export default function Search() {
   }
 
   return (
-    <Box display="flex" flexDirection="column" flex="1" minHeight="0px">
+    <Box flex="1" minHeight="0px" overflow="auto">
       <Box p="3" pt="1">
         <SearchBar
           value={state.term}
@@ -107,9 +107,7 @@ export default function Search() {
           }}
         />
       </Box>
-      <Box flex="1" overflow="auto" minHeight="0px">
-        {renderContent()}
-      </Box>
+      {renderContent()}
     </Box>
   )
 }
