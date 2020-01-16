@@ -1,22 +1,7 @@
+import { variant } from '@xstyled/system'
 import styled, { css } from '@xstyled/styled-components'
 
-const sizeVariants = {
-  normal: css`
-    height: 12;
-    width: 12;
-  `,
-  small: css`
-    height: 10;
-    width: 10;
-  `,
-  tiny: css`
-    height: 8;
-    width: 8;
-    font-size: 0;
-  `
-}
-
-export const Container = styled.box`
+export const Container = styled.div`
   align-items: center;
   border-radius: 50%;
   display: flex;
@@ -26,5 +11,22 @@ export const Container = styled.box`
   user-select: none;
   width: 12;
 
-  ${({ variant }) => sizeVariants[variant]};
+  ${variant({
+    default: 'normal',
+    variants: {
+      normal: css`
+        height: 12;
+        width: 12;
+      `,
+      small: css`
+        height: 10;
+        width: 10;
+      `,
+      tiny: css`
+        height: 8;
+        width: 8;
+        font-size: 0;
+      `
+    }
+  })}
 `

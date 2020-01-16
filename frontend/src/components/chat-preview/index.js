@@ -1,10 +1,6 @@
 import React from 'react'
-import {
-  Container,
-  MessageContent,
-  MessengerNickName,
-  InfoContainer
-} from './elements'
+import { Container, InfoContainer } from './elements'
+import Ellipsis from '../ellipsis'
 import Avatar from '../avatar'
 
 export default function ChatPreview({ chat, selected, ...props }) {
@@ -12,8 +8,12 @@ export default function ChatPreview({ chat, selected, ...props }) {
     <Container {...props} selected={selected}>
       <Avatar nickname={chat.displayName} />
       <InfoContainer>
-        <MessengerNickName>{chat.displayName}</MessengerNickName>
-        <MessageContent>{chat.lastMessage.content}</MessageContent>
+        <Ellipsis fontSize="1" fontWeight="medium">
+          {chat.displayName}
+        </Ellipsis>
+        <Ellipsis color="gray.7" fontSize="0">
+          {chat.lastMessage.content}
+        </Ellipsis>
       </InfoContainer>
     </Container>
   )

@@ -11,11 +11,11 @@ export default function Button({ loading, children, ...props }) {
         <>
           <span style={{ opacity: 0 }}>{children}</span>
           <span
-            css={`
-              position: absolute;
-              display: flex;
-              align-items: center;
-            `}
+            style={{
+              position: 'absolute',
+              display: 'flex',
+              alignItems: 'center'
+            }}
           >
             <Loader />
           </span>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@xstyled/styled-components'
 import { useApolloClient } from '@apollo/react-hooks'
 import SearchBar from '~/components/search-bar'
+import CenterBox from '~/components/center-box'
 import ChannelPreview from '~/components/channel-preview'
 import Loader from '~/components/loader'
 import searchQuery from '~/graphql/queries/search'
@@ -57,7 +58,7 @@ export default function Search() {
 
     if (!state.channels.length) {
       return (
-        <Box p="5" height="full">
+        <CenterBox height="48">
           <img
             src="https://res.cloudinary.com/dpwoyjb1f/image/upload/v1578875002/id-challenge/undraw_searching_p5ux_nw4hde.svg"
             alt="empty search"
@@ -66,7 +67,7 @@ export default function Search() {
               max-width: 100%;
             `}
           />
-        </Box>
+        </CenterBox>
       )
     }
 

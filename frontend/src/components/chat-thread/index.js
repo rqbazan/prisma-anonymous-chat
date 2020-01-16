@@ -5,11 +5,7 @@ import Avatar from '../avatar'
 
 function Message({ content, author, isOneOfMine }) {
   return (
-    <MessageRow
-      display="flex"
-      px="3"
-      justifyContent={isOneOfMine ? 'flex-end' : 'flex-start'}
-    >
+    <MessageRow justifyContent={isOneOfMine ? 'flex-end' : 'flex-start'}>
       {!isOneOfMine && (
         <Box mr="2">
           <Avatar nickname={author.nickname} variant="tiny" />
@@ -23,6 +19,7 @@ function Message({ content, author, isOneOfMine }) {
         borderRadius="xl"
         color={isOneOfMine ? 'light' : 'dark'}
         backgroundColor={isOneOfMine ? 'indigo.5' : 'gray.3'}
+        style={{ wordBreak: 'break-word' }}
       >
         {content}
       </Box>

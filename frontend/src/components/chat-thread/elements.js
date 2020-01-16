@@ -2,7 +2,7 @@ import styled from '@xstyled/styled-components'
 
 export const MessageRow = styled.box`
   display: flex;
-  padding: 0 2;
+  padding: 0 3;
 
   &:not(:last-child) {
     margin-bottom: 3;

@@ -24,14 +24,9 @@ export default function SearchBar({
       style={style}
       className={className}
     >
-      <Icon
-        name="search"
-        size={24}
-        css={`
-          position: absolute;
-          left: 8px;
-        `}
-      />
+      <Box ml="2" position="absolute">
+        <Icon name="search" size={24} />
+      </Box>
       <Input
         {...props}
         onChange={e => {
