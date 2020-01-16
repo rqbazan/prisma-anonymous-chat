@@ -30,8 +30,14 @@ function Message({ content, author, isOneOfMine }) {
 }
 
 export default function ChatThread({ loading, meId, messages, ...props }) {
+  const containerRef = React.useRef()
+
+  React.useEffect(() => {
+    containerRef.current.scrollTop = containerRef.current.scrollHeight
+  }, [messages])
+
   return (
-    <Box flex="1" overflow="auto" minHeight="0px" {...props}>
+    <Box ref={containerRef} flex="1" overflow="auto" minHeight="0px" {...props}>
       {loading ? (
         <CenterBox>
           <Loader dark size={32} />
