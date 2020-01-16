@@ -1,6 +1,6 @@
 import styled from '@xstyled/styled-components'
 
-export const Container = styled.div`
+export const Container = styled.box`
   align-items: center;
   display: flex;
   height: 100%;

@@ -1,14 +1,14 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import getChatQuery from '~/graphql/queries/get-chat'
 import chatsQuery from '~/graphql/queries/chats'
 import sendMessageMutation from '~/graphql/mutations/send-message'
 import ChatHeader from '~/components/chat-header'
 import ChatInput from '~/components/chat-input'
-import ChatThread from '~/components/chat-thread'
 import getDisplayName, { channelTypes } from '~/utils/get-channel-display-name'
 import getRandomOptimisticId from '~/utils/get-random-optimistic-id'
+import ChatThread from '../chat-thread'
 
 export default function Chat({ user }) {
   const {
@@ -16,10 +16,6 @@ export default function Chat({ user }) {
   } = useRouter()
 
   const displayName = getDisplayName(channelName, channelType)
-
-  const { data, loading } = useQuery(getChatQuery, {
-    variables: { channelName, channelType }
-  })
 
   const [sendMessage] = useMutation(sendMessageMutation)
 
@@ -134,7 +130,7 @@ export default function Chat({ user }) {
   return (
     <>
       <ChatHeader displayName={displayName} />
-      <ChatThread loading={loading} messages={data?.chat?.messages ?? []} />
+      <ChatThread channelName={channelName} channelType={channelType} />
       <ChatInput onSend={onSendMessage} />
     </>
   )
