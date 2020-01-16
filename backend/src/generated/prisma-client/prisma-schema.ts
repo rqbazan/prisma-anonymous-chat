@@ -287,6 +287,7 @@ export const typeDefs = /* GraphQL */ `
       last: Int
     ): [Message!]
     createdAt: DateTime!
+    lastSentMessageAt: DateTime!
   }
 
   type GroupChatConnection {
@@ -300,6 +301,7 @@ export const typeDefs = /* GraphQL */ `
     category: CategoryCreateOneInput!
     participates: UserCreateManyInput
     messages: MessageCreateManyInput
+    lastSentMessageAt: DateTime!
   }
 
   type GroupChatEdge {
@@ -312,11 +314,14 @@ export const typeDefs = /* GraphQL */ `
     id_DESC
     createdAt_ASC
     createdAt_DESC
+    lastSentMessageAt_ASC
+    lastSentMessageAt_DESC
   }
 
   type GroupChatPreviousValues {
     id: ID!
     createdAt: DateTime!
+    lastSentMessageAt: DateTime!
   }
 
   type GroupChatSubscriptionPayload {
@@ -341,6 +346,11 @@ export const typeDefs = /* GraphQL */ `
     category: CategoryUpdateOneRequiredInput
     participates: UserUpdateManyInput
     messages: MessageUpdateManyInput
+    lastSentMessageAt: DateTime
+  }
+
+  input GroupChatUpdateManyMutationInput {
+    lastSentMessageAt: DateTime
   }
 
   input GroupChatWhereInput {
@@ -373,6 +383,14 @@ export const typeDefs = /* GraphQL */ `
     createdAt_lte: DateTime
     createdAt_gt: DateTime
     createdAt_gte: DateTime
+    lastSentMessageAt: DateTime
+    lastSentMessageAt_not: DateTime
+    lastSentMessageAt_in: [DateTime!]
+    lastSentMessageAt_not_in: [DateTime!]
+    lastSentMessageAt_lt: DateTime
+    lastSentMessageAt_lte: DateTime
+    lastSentMessageAt_gt: DateTime
+    lastSentMessageAt_gte: DateTime
     AND: [GroupChatWhereInput!]
     OR: [GroupChatWhereInput!]
     NOT: [GroupChatWhereInput!]
@@ -621,6 +639,10 @@ export const typeDefs = /* GraphQL */ `
       data: GroupChatUpdateInput!
       where: GroupChatWhereUniqueInput!
     ): GroupChat
+    updateManyGroupChats(
+      data: GroupChatUpdateManyMutationInput!
+      where: GroupChatWhereInput
+    ): BatchPayload!
     upsertGroupChat(
       where: GroupChatWhereUniqueInput!
       create: GroupChatCreateInput!
@@ -649,6 +671,10 @@ export const typeDefs = /* GraphQL */ `
       data: PrivateChatUpdateInput!
       where: PrivateChatWhereUniqueInput!
     ): PrivateChat
+    updateManyPrivateChats(
+      data: PrivateChatUpdateManyMutationInput!
+      where: PrivateChatWhereInput
+    ): BatchPayload!
     upsertPrivateChat(
       where: PrivateChatWhereUniqueInput!
       create: PrivateChatCreateInput!
@@ -702,6 +728,7 @@ export const typeDefs = /* GraphQL */ `
       last: Int
     ): [Message!]
     createdAt: DateTime!
+    lastSentMessageAt: DateTime!
   }
 
   type PrivateChatConnection {
@@ -715,6 +742,7 @@ export const typeDefs = /* GraphQL */ `
     participateA: UserCreateOneInput!
     participateB: UserCreateOneInput!
     messages: MessageCreateManyInput
+    lastSentMessageAt: DateTime!
   }
 
   type PrivateChatEdge {
@@ -727,11 +755,14 @@ export const typeDefs = /* GraphQL */ `
     id_DESC
     createdAt_ASC
     createdAt_DESC
+    lastSentMessageAt_ASC
+    lastSentMessageAt_DESC
   }
 
   type PrivateChatPreviousValues {
     id: ID!
     createdAt: DateTime!
+    lastSentMessageAt: DateTime!
   }
 
   type PrivateChatSubscriptionPayload {
@@ -756,6 +787,11 @@ export const typeDefs = /* GraphQL */ `
     participateA: UserUpdateOneRequiredInput
     participateB: UserUpdateOneRequiredInput
     messages: MessageUpdateManyInput
+    lastSentMessageAt: DateTime
+  }
+
+  input PrivateChatUpdateManyMutationInput {
+    lastSentMessageAt: DateTime
   }
 
   input PrivateChatWhereInput {
@@ -786,6 +822,14 @@ export const typeDefs = /* GraphQL */ `
     createdAt_lte: DateTime
     createdAt_gt: DateTime
     createdAt_gte: DateTime
+    lastSentMessageAt: DateTime
+    lastSentMessageAt_not: DateTime
+    lastSentMessageAt_in: [DateTime!]
+    lastSentMessageAt_not_in: [DateTime!]
+    lastSentMessageAt_lt: DateTime
+    lastSentMessageAt_lte: DateTime
+    lastSentMessageAt_gt: DateTime
+    lastSentMessageAt_gte: DateTime
     AND: [PrivateChatWhereInput!]
     OR: [PrivateChatWhereInput!]
     NOT: [PrivateChatWhereInput!]

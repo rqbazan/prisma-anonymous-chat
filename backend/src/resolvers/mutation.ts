@@ -35,10 +35,16 @@ const sendMessage: Resolver<Message> = async (
     })
 
     if (privateChat) {
+      await prisma.updatePrivateChat({
+        data: { lastSentMessageAt: new Date() },
+        where: { id: privateChat.id }
+      })
+
       return privateChat
     }
 
     return prisma.createPrivateChat({
+      lastSentMessageAt: new Date(),
       participateA: { connect: { id: userId } },
       participateB: { connect: { nickname: channelName } }
     })
@@ -55,13 +61,17 @@ const sendMessage: Resolver<Message> = async (
     if (groupChat) {
       await prisma.updateGroupChat({
         where: { id: groupChat.id },
-        data: { participates: { connect: { id: userId } } }
+        data: {
+          lastSentMessageAt: new Date(),
+          participates: { connect: { id: userId } }
+        }
       })
 
       return groupChat
     }
 
     return prisma.createGroupChat({
+      lastSentMessageAt: new Date(),
       category: { connect: { name: channelName } },
       participates: { connect: { id: userId } }
     })
