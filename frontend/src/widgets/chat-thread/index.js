@@ -70,6 +70,7 @@ export default function ChatThread({ channelName, channelType }) {
       display="flex"
       flexDirection="column"
       flex="1"
+      minHeight="0px"
       overflow={showContent ? 'auto' : 'hidden'}
       position="relative"
     >
