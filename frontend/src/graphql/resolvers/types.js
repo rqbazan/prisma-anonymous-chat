@@ -2,7 +2,7 @@ import getSessionId from '~/utils/get-session-id'
 import getDisplayName, { channelTypes } from '~/utils/get-channel-display-name'
 
 const PrivateChatResolver = {
-  displayName: (privateChat, __, { cache }) => {
+  displayName: (privateChat, _, { cache }) => {
     const sessionId = getSessionId(cache)
 
     let nickname
@@ -24,8 +24,13 @@ const GroupChatResolver = {
   }
 }
 
+const MessageResolver = {
+  isOneOfMine: ({ author }, _, { cache }) => author.id === getSessionId(cache)
+}
+
 export default {
   GroupChat: GroupChatResolver,
+  Message: MessageResolver,
   PrivateChat: {
     ...PrivateChatResolver,
     channelName: PrivateChatResolver.displayName

@@ -8,6 +8,11 @@ export default gql`
       lastMessage {
         id
         content
+        author {
+          id
+          nickname
+        }
+        isOneOfMine @client
       }
       displayName @client
       channelName @client

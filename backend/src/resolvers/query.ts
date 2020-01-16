@@ -74,10 +74,17 @@ const chats: Resolver<WellKnowChat[]> = async (_, __, { userId, prisma }) => {
     })
   ])
 
+  function sortDescByLastSentMessage(a: WellKnowChat, b: WellKnowChat) {
+    return (
+      new Date(b.lastSentMessageAt).getTime() -
+      new Date(a.lastSentMessageAt).getTime()
+    )
+  }
+
   return [
     ...privateChats.map(chat => toWellKnowChat(chat, ChannelType.PRIVATE)),
     ...groupChats.map(chat => toWellKnowChat(chat, ChannelType.GROUP))
-  ]
+  ].sort(sortDescByLastSentMessage)
 }
 
 const getChat: Resolver<

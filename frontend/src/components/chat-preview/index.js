@@ -12,6 +12,7 @@ export default function ChatPreview({ chat, selected, ...props }) {
           {chat.displayName}
         </Ellipsis>
         <Ellipsis color="gray.7" fontSize="0">
+          {chat.lastMessage.isOneOfMine && 'You: '}
           {chat.lastMessage.content}
         </Ellipsis>
       </InfoContainer>

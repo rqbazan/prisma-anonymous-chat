@@ -202,6 +202,10 @@ export interface Prisma {
     data: GroupChatUpdateInput
     where: GroupChatWhereUniqueInput
   }) => GroupChatPromise
+  updateManyGroupChats: (args: {
+    data: GroupChatUpdateManyMutationInput
+    where?: GroupChatWhereInput
+  }) => BatchPayloadPromise
   upsertGroupChat: (args: {
     where: GroupChatWhereUniqueInput
     create: GroupChatCreateInput
@@ -230,6 +234,10 @@ export interface Prisma {
     data: PrivateChatUpdateInput
     where: PrivateChatWhereUniqueInput
   }) => PrivateChatPromise
+  updateManyPrivateChats: (args: {
+    data: PrivateChatUpdateManyMutationInput
+    where?: PrivateChatWhereInput
+  }) => BatchPayloadPromise
   upsertPrivateChat: (args: {
     where: PrivateChatWhereUniqueInput
     create: PrivateChatCreateInput
@@ -319,12 +327,16 @@ export type GroupChatOrderByInput =
   | 'id_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
+  | 'lastSentMessageAt_ASC'
+  | 'lastSentMessageAt_DESC'
 
 export type PrivateChatOrderByInput =
   | 'id_ASC'
   | 'id_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
+  | 'lastSentMessageAt_ASC'
+  | 'lastSentMessageAt_DESC'
 
 export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED'
 
@@ -507,6 +519,14 @@ export interface GroupChatWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>
   createdAt_gt?: Maybe<DateTimeInput>
   createdAt_gte?: Maybe<DateTimeInput>
+  lastSentMessageAt?: Maybe<DateTimeInput>
+  lastSentMessageAt_not?: Maybe<DateTimeInput>
+  lastSentMessageAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  lastSentMessageAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  lastSentMessageAt_lt?: Maybe<DateTimeInput>
+  lastSentMessageAt_lte?: Maybe<DateTimeInput>
+  lastSentMessageAt_gt?: Maybe<DateTimeInput>
+  lastSentMessageAt_gte?: Maybe<DateTimeInput>
   AND?: Maybe<GroupChatWhereInput[] | GroupChatWhereInput>
   OR?: Maybe<GroupChatWhereInput[] | GroupChatWhereInput>
   NOT?: Maybe<GroupChatWhereInput[] | GroupChatWhereInput>
@@ -548,6 +568,14 @@ export interface PrivateChatWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>
   createdAt_gt?: Maybe<DateTimeInput>
   createdAt_gte?: Maybe<DateTimeInput>
+  lastSentMessageAt?: Maybe<DateTimeInput>
+  lastSentMessageAt_not?: Maybe<DateTimeInput>
+  lastSentMessageAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  lastSentMessageAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  lastSentMessageAt_lt?: Maybe<DateTimeInput>
+  lastSentMessageAt_lte?: Maybe<DateTimeInput>
+  lastSentMessageAt_gt?: Maybe<DateTimeInput>
+  lastSentMessageAt_gte?: Maybe<DateTimeInput>
   AND?: Maybe<PrivateChatWhereInput[] | PrivateChatWhereInput>
   OR?: Maybe<PrivateChatWhereInput[] | PrivateChatWhereInput>
   NOT?: Maybe<PrivateChatWhereInput[] | PrivateChatWhereInput>
@@ -589,6 +617,7 @@ export interface GroupChatCreateInput {
   category: CategoryCreateOneInput
   participates?: Maybe<UserCreateManyInput>
   messages?: Maybe<MessageCreateManyInput>
+  lastSentMessageAt: DateTimeInput
 }
 
 export interface CategoryCreateOneInput {
@@ -632,6 +661,7 @@ export interface GroupChatUpdateInput {
   category?: Maybe<CategoryUpdateOneRequiredInput>
   participates?: Maybe<UserUpdateManyInput>
   messages?: Maybe<MessageUpdateManyInput>
+  lastSentMessageAt?: Maybe<DateTimeInput>
 }
 
 export interface CategoryUpdateOneRequiredInput {
@@ -845,6 +875,10 @@ export interface MessageUpdateManyDataInput {
   content?: Maybe<String>
 }
 
+export interface GroupChatUpdateManyMutationInput {
+  lastSentMessageAt?: Maybe<DateTimeInput>
+}
+
 export interface MessageUpdateInput {
   content?: Maybe<String>
   author?: Maybe<UserUpdateOneRequiredInput>
@@ -860,12 +894,18 @@ export interface PrivateChatCreateInput {
   participateA: UserCreateOneInput
   participateB: UserCreateOneInput
   messages?: Maybe<MessageCreateManyInput>
+  lastSentMessageAt: DateTimeInput
 }
 
 export interface PrivateChatUpdateInput {
   participateA?: Maybe<UserUpdateOneRequiredInput>
   participateB?: Maybe<UserUpdateOneRequiredInput>
   messages?: Maybe<MessageUpdateManyInput>
+  lastSentMessageAt?: Maybe<DateTimeInput>
+}
+
+export interface PrivateChatUpdateManyMutationInput {
+  lastSentMessageAt?: Maybe<DateTimeInput>
 }
 
 export interface UserUpdateInput {
@@ -1142,6 +1182,7 @@ export interface AggregateChatSubscription
 export interface GroupChat {
   id: ID_Output
   createdAt: DateTimeOutput
+  lastSentMessageAt: DateTimeOutput
 }
 
 export interface GroupChatPromise extends Promise<GroupChat>, Fragmentable {
@@ -1166,6 +1207,7 @@ export interface GroupChatPromise extends Promise<GroupChat>, Fragmentable {
     last?: Int
   }) => T
   createdAt: () => Promise<DateTimeOutput>
+  lastSentMessageAt: () => Promise<DateTimeOutput>
 }
 
 export interface GroupChatSubscription
@@ -1192,6 +1234,7 @@ export interface GroupChatSubscription
     last?: Int
   }) => T
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  lastSentMessageAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface GroupChatNullablePromise
@@ -1218,6 +1261,7 @@ export interface GroupChatNullablePromise
     last?: Int
   }) => T
   createdAt: () => Promise<DateTimeOutput>
+  lastSentMessageAt: () => Promise<DateTimeOutput>
 }
 
 export interface User {
@@ -1391,6 +1435,7 @@ export interface AggregateMessageSubscription
 export interface PrivateChat {
   id: ID_Output
   createdAt: DateTimeOutput
+  lastSentMessageAt: DateTimeOutput
 }
 
 export interface PrivateChatPromise extends Promise<PrivateChat>, Fragmentable {
@@ -1407,6 +1452,7 @@ export interface PrivateChatPromise extends Promise<PrivateChat>, Fragmentable {
     last?: Int
   }) => T
   createdAt: () => Promise<DateTimeOutput>
+  lastSentMessageAt: () => Promise<DateTimeOutput>
 }
 
 export interface PrivateChatSubscription
@@ -1425,6 +1471,7 @@ export interface PrivateChatSubscription
     last?: Int
   }) => T
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  lastSentMessageAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface PrivateChatNullablePromise
@@ -1443,6 +1490,7 @@ export interface PrivateChatNullablePromise
     last?: Int
   }) => T
   createdAt: () => Promise<DateTimeOutput>
+  lastSentMessageAt: () => Promise<DateTimeOutput>
 }
 
 export interface PrivateChatConnection {
@@ -1687,6 +1735,7 @@ export interface GroupChatSubscriptionPayloadSubscription
 export interface GroupChatPreviousValues {
   id: ID_Output
   createdAt: DateTimeOutput
+  lastSentMessageAt: DateTimeOutput
 }
 
 export interface GroupChatPreviousValuesPromise
@@ -1694,6 +1743,7 @@ export interface GroupChatPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>
   createdAt: () => Promise<DateTimeOutput>
+  lastSentMessageAt: () => Promise<DateTimeOutput>
 }
 
 export interface GroupChatPreviousValuesSubscription
@@ -1701,6 +1751,7 @@ export interface GroupChatPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  lastSentMessageAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface MessageSubscriptionPayload {
@@ -1778,6 +1829,7 @@ export interface PrivateChatSubscriptionPayloadSubscription
 export interface PrivateChatPreviousValues {
   id: ID_Output
   createdAt: DateTimeOutput
+  lastSentMessageAt: DateTimeOutput
 }
 
 export interface PrivateChatPreviousValuesPromise
@@ -1785,6 +1837,7 @@ export interface PrivateChatPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>
   createdAt: () => Promise<DateTimeOutput>
+  lastSentMessageAt: () => Promise<DateTimeOutput>
 }
 
 export interface PrivateChatPreviousValuesSubscription
@@ -1792,6 +1845,7 @@ export interface PrivateChatPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  lastSentMessageAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface UserSubscriptionPayload {

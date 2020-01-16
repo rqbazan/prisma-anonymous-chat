@@ -23,6 +23,7 @@ export default gql`
       }
       messages {
         id
+        isOneOfMine @client
         content
         author {
           id

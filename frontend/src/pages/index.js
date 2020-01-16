@@ -37,7 +37,7 @@ function IndexPage({ channelName, userId }) {
         flexDirection="column"
         width={{ xs: '100%', md: '60%', lg: '70%', xl: '80%' }}
       >
-        {!channelName ? <UnselectedChat /> : <Chat />}
+        {!channelName ? <UnselectedChat /> : <Chat user={user} />}
       </Box>
     </Box>
   )
