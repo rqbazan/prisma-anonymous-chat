@@ -29,7 +29,7 @@ function Message({ content, author, isOneOfMine }) {
   )
 }
 
-export default function ChatThread({ loading, meId, messages, ...props }) {
+export default function ChatThread({ loading, messages, ...props }) {
   const containerRef = React.useRef()
 
   React.useEffect(() => {
@@ -43,13 +43,7 @@ export default function ChatThread({ loading, meId, messages, ...props }) {
           <Loader dark size={32} />
         </CenterBox>
       ) : (
-        messages.map(message => (
-          <Message
-            key={message.id}
-            isOneOfMine={message.author.id === meId}
-            {...message}
-          />
-        ))
+        messages.map(message => <Message key={message.id} {...message} />)
       )}
     </Box>
   )

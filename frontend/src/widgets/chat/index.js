@@ -11,7 +11,7 @@ import getDisplayName from '~/utils/get-channel-display-name'
 
 export default function Chat({ user }) {
   const {
-    query: { userId, channelName, channelType }
+    query: { channelName, channelType }
   } = useRouter()
 
   const { data, loading } = useQuery(getChatQuery, {
@@ -26,6 +26,7 @@ export default function Chat({ user }) {
       sendMessage: {
         id: Math.floor(Math.random() * 1000000000),
         content,
+        isOneOfMine: true,
         __typename: 'Message',
         author: {
           __typename: 'User',
@@ -84,11 +85,7 @@ export default function Chat({ user }) {
   return (
     <>
       <ChatHeader displayName={getDisplayName(channelName, channelType)} />
-      <ChatThread
-        loading={loading}
-        meId={userId}
-        messages={data?.chat?.messages ?? []}
-      />
+      <ChatThread loading={loading} messages={data?.chat?.messages ?? []} />
       <ChatInput onSend={onSendMessage} />
     </>
   )

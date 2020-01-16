@@ -13,6 +13,7 @@ export default gql`
     ) {
       id
       content
+      isOneOfMine @client
       author {
         id
         nickname
