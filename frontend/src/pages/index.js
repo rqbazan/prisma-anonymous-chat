@@ -32,16 +32,13 @@ function IndexPage({ channelName, userId }) {
         <UserSection user={user} />
         <Search />
       </Box>
-      {/* <Box
-        display={{
-          xs: channelName ? 'flex' : 'none',
-          md: 'flex'
-        }}
+      <Box
+        display={{ xs: channelName ? 'flex' : 'none', md: 'flex' }}
         flexDirection="column"
         width={{ xs: '100%', md: '60%', lg: '70%', xl: '80%' }}
       >
         {!channelName ? <UnselectedChat /> : <Chat />}
-      </Box> */}
+      </Box>
     </Box>
   )
 }

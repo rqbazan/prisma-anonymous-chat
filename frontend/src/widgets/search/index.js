@@ -58,7 +58,7 @@ export default function Search() {
 
     if (!state.channels.length) {
       return (
-        <CenterBox height="48">
+        <CenterBox innerHeight="48">
           <img
             src="https://res.cloudinary.com/dpwoyjb1f/image/upload/v1578875002/id-challenge/undraw_searching_p5ux_nw4hde.svg"
             alt="empty search"
