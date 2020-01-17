@@ -64,6 +64,29 @@ export default function ChatThread({ channelName, channelType }) {
   const messages = data?.chat?.messages ?? null
   const showContent = !loading && !!messages
 
+  function renderContent() {
+    if (showContent) {
+      return <MessageList containerRef={containerRef} messages={messages} />
+    }
+
+    if (!loading && !data?.chat) {
+      return (
+        <CenterBox innerHeight={{ xs: '30%', sm: '40%', lg: '50%' }}>
+          <img
+            alt="no chat"
+            src="https://res.cloudinary.com/dpwoyjb1f/image/upload/v1579219226/id-challenge/undraw_begin_chat_c6pj_unz8oc.svg"
+          />
+        </CenterBox>
+      )
+    }
+
+    return (
+      <CenterBox position="absolute" width="full" backgroundColor="white">
+        <Loader dark size={32} />
+      </CenterBox>
+    )
+  }
+
   return (
     <Box
       ref={containerRef}
@@ -74,14 +97,7 @@ export default function ChatThread({ channelName, channelType }) {
       overflow={showContent ? 'auto' : 'hidden'}
       position="relative"
     >
-      {!showContent && (
-        <CenterBox position="absolute" width="full" backgroundColor="white">
-          <Loader dark size={32} />
-        </CenterBox>
-      )}
-      {showContent && (
-        <MessageList containerRef={containerRef} messages={messages} />
-      )}
+      {renderContent()}
     </Box>
   )
 }
