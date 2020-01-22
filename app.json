@@ -1,6 +1,6 @@
 {
-  "name": "ID Challenge",
-  "repository": "https://github.com/rqbazan/id-challenge",
+  "name": "Prisma Anonymous Chat",
+  "repository": "https://github.com/rqbazan/prisma-anonymous-chat",
   "env": {
     "PRISMA_URL": { "required": true },
     "PRISMA_MANAGEMENT_API_SECRET": { "required": true },

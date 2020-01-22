@@ -1,5 +1,5 @@
 {
-  "name": "id-challenge-monorepo",
+  "name": "prisma-anonymous-chat-monorepo",
   "private": true,
   "engines": {
     "node": "12.x"
@@ -12,13 +12,13 @@
   "scripts": {
     "tsc:watch": "tsc -p backend -w",
     "nodemon": "nodemon",
-    "dev": "run-p tsc:watch nodemon",
+    "dev": "tsc -p backend && run-p tsc:watch nodemon",
     "build": ". ./scripts/prebuild.sh && run-p build:*",
     "build:frontend": "next build frontend",
     "build:backend": "tsc -p backend && ef-tspm -c backend/tsconfig.json -r backend",
     "start": "NODE_ENV=production node ./backend/dist/src",
     "lint": "eslint --ignore-path .gitignore . --ext ts,js",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|js|json)\" \"!**/generated/**\"",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|js|json)\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
     "validate": "run-p check-format lint build"
@@ -46,6 +46,7 @@
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "dotenv": "^8.2.0",
+    "dotenv-cli": "^3.1.0",
     "eslint": "^6.8.0",
     "husky": "^4.0.10",
     "lint-staged": "^9.5.0",

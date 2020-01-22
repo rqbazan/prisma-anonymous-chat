@@ -1,4 +1,4 @@
-# ID Challenge
+# Prisma Anonymous Chat
 
 This repository contains the solution for
 [the ID challenge](https://www.notion.so/Reto-chat-an-nimo-1ad4ccfb508f447c90171914545f365a),
@@ -14,8 +14,7 @@ in order to get the **Web Developer - FrontEnd** position of the company.
    > all run `cd backend`
 
 3. Run `docker-compose up -d`
-4. Init prisma `prisma init --endpoint http://localhost:4466`
-5. Deploy prisma `prisma deploy`
+4. Deploy prisma `yarn prisma:deploy`
 
 ### How to run the project after it's has setuped?
 
